@@ -85,27 +85,27 @@ describe('User', function() {
     }
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(Pantry).to.be.a('function');
   });
 
-  it.only('should have ingredients', function() {
+  it('should have ingredients', function() {
     expect(pantry.ingredients).to.deep.equal(samplePantryInfo);
   });
 
-  it.only('should be able to check pantry ingredients', function() {
+  it('should be able to check pantry ingredients', function() {
     expect(pantry.checkPantryIngredients(recipe.ingredients[3])).to.deep.equal(recipe.ingredients[3]);
   });
 
-  it.only('should be able to check pantry ingredients', function() {
+  it('should be able to check pantry ingredients', function() {
     expect(pantry.checkPantryIngredients(recipe.ingredients[1])).to.equal(true);
   });
 
-  it.only('should be able to check the ingredient amount', function() {
+  it('should be able to check the ingredient amount', function() {
     expect(pantry.checkIngredientAmount(samplePantryInfo[1],recipe.ingredients[1])).to.equal(true);
   });
 
-  it.only('should be able to check the ingredient amount', function() {
+  it('should be able to check the ingredient amount', function() {
     expect(pantry.checkIngredientAmount(samplePantryInfo[0],recipe.ingredients[0])).to.equal(recipe.ingredients[0]);
   });
 

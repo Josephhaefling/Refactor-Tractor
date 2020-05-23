@@ -50,14 +50,14 @@ fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData
 .catch(err => console.error(err))
 
 function createUserRepo(wcUsersData) {
-  console.log('wcUserData', wcUsersData)
+  let randomNum = Math.floor(Math.random() * wcUsersData.length)
   let userRepository = new UserRepository(wcUsersData)
-  console.log(userRepository);
-  return wcUsersData
+  generateUser(userRepository.userData[randomNum])
 }
 
+// We left off last, getting a random user.
+
 function createIngredientsRepo(ingredientsData) {
-  console.log('ingredientsRepo', ingredientsData)
   let ingredientsRepository = new IngredientsRepository(ingredientsData)
   console.log('ingredients Repository', ingredientsRepository);
   return ingredientsData
@@ -70,19 +70,26 @@ function createRecipesRepo(recipeData) {
   return recipeData
 }
 
-// // GENERATE A USER ON LOAD
-// function generateUser() {
-//   user = new User(users[Math.floor(Math.random() * users.length)]);
-//   let firstName = user.name.split(" ")[0];
-//   let welcomeMsg = `
-//     <div class="welcome-msg">
-//       <h1>Welcome ${firstName}!</h1>
-//     </div>`;
-//   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-//     welcomeMsg);
-//   findPantryInfo();
-// }
+// GENERATE A USER ON LOAD
+function generateUser(userInfo) {
+  let pantry = new Pantry(userPantryInfo)
+  user = new User(users[Math.floor(Math.random() * users.length)]);
+  let firstName = user.name.split(" ")[0];
+  let welcomeMsg = `
+    <div class="welcome-msg">
+      <h1>Welcome ${firstName}!</h1>
+    </div>`;
+  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+    welcomeMsg);
+  findPantryInfo();
+}
 
+// function generateUserRepository(userData) {
+  
+//   let userRepo = new UserRepository(userData)
+//   console.log(userRepo);
+  
+// }
 // // CREATE RECIPE CARDS
 // function createCards() {
 //   recipeData.forEach(recipe => {
