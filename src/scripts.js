@@ -2,12 +2,15 @@ import $ from 'jquery';
 import users from './data/users-data';
 import recipeData from  './data/recipe-data';
 import ingredientData from './data/ingredient-data';
-import UserRepository from '../src/userRepository'
+import UserRepository from '../src/userRepository';
+import IngredientsRepository from '../src/ingredientsRepository';
+import RecipesRepository from '../src/recipesRepository';
 import './css/base.scss';
 import './css/styles.scss';
 
 import User from './user';
 import Recipe from './recipe';
+import ingredientsData from './data/ingredient-data';
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -37,13 +40,36 @@ fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'
 .then(response => response.json())
 .then(data => createUserRepo(data.wcUsersData))
 .catch(err => console.error(err))
-console.log('hello, hi');
-// 
+
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+.then(response => response.json())
+.then(data => createIngredientsRepo(data.ingredientsData))
+.catch(err => console.error(err))
+
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+.then(response => response.json())
+.then(data => createRecipesRepo(data.recipeData))
+.catch(err => console.error(err))
+
 function createUserRepo(wcUsersData) {
   console.log('wcUserData', wcUsersData)
   let userRepository = new UserRepository(wcUsersData)
   console.log(userRepository);
   return wcUsersData
+}
+
+function createIngredientsRepo(ingredientsData) {
+  console.log('ingredientsRepo', ingredientsData)
+  let ingredientsRepository = new IngredientsRepository(ingredientsData)
+  console.log('ingredients Repository', ingredientsRepository);
+  return ingredientsData
+}
+
+function createRecipesRepo(recipeData) {
+  console.log('recipeRepository', recipeData)
+  let recipesRepository = new RecipesRepository(recipeData)
+  console.log('recipes Repository', recipesRepository);
+  return recipeData
 }
 
 // // GENERATE A USER ON LOAD
