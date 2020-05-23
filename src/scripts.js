@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
+
 import UserRepository from '../src/userRepository';
 import IngredientsRepository from '../src/ingredientsRepository';
 import RecipesRepository from '../src/recipesRepository';

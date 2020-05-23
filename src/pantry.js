@@ -5,13 +5,12 @@ class Pantry {
   }
 
   checkPantryIngredients(recipeIngredient) {
-    this.ingredients.find(ingredient => ingredient.id === recipeIngredient.id)
+    const ingredientAvailable = this.ingredients.find(ingredient => ingredient.ingredient === recipeIngredient.id)
+   return ingredientAvailable ? true : recipeIngredient
   }
 
   checkIngredientAmount(pantryIngredient, recipeIngredient) {
-    if (pantryIngredient.amount >= recipeIngredient.amount) {
-
-    } 
+   return pantryIngredient.amount >= recipeIngredient.quantity.amount ? true : recipeIngredient
   }
 }
 
