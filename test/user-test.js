@@ -160,8 +160,7 @@ describe('User', function() {
 
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe1);
-    // console.log('recipesToCook', user.recipesToCook);
-    expect(user.checkPantryForIngredients(user.recipesToCook[0])).to.deep.equal([recipe1]);
+    expect(user.checkPantryForIngredients(user.recipesToCook[0])).to.deep.equal([recipe1.ingredients[3]]);
   });
 
 });

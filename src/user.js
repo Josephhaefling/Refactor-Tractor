@@ -6,6 +6,7 @@ class User {
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
+  
   saveRecipe(recipe) {
     this.favoriteRecipes.push(recipe);
   }
@@ -24,18 +25,18 @@ class User {
   }
 
   checkPantryForIngredients(recipeToCook) {
-    console.log('this.pantry', this.pantry.checkPantryForIngredients(recipeToCook.ingredients[0]));
-    recipeToCook.ingredients.map(ingredient => {
-    let hasIngredient = this.pantry.checkPantryForIngredients(ingredient)
-    
-      if(hasIngredient) {
-      return  this.pantry.checkIngredientAmount(ingredient)
-      } else {
-        return hasIngredient
-      }
+    let missingIngredients = recipeToCook.ingredients.map(ingredient => {
+    let pantryIngredient = this.pantry.checkPantryIngredients(ingredient)
+    return pantryIngredient === 'true' ? this.pantry.checkIngredientAmount(pantryIngredient, ingredient) : pantryIngredient;
     })
-  }
-
+    let thing = missingIngredients.reduce((missingIngredients, ingredient) =>  {
+      if (ingredient !== true) {
+        missingIngredients.push(ingredient)
+      }
+      return missingIngredients
+  }, [])
+    return thing.length > 0 ? thing : true
+  };
 }
 
 module.exports = User;
