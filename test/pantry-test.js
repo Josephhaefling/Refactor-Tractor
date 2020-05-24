@@ -102,11 +102,11 @@ describe('User', function() {
   });
 
   it('should be able to check the ingredient amount', function() {
-    expect(pantry.checkIngredientAmount(samplePantryInfo[1],recipe.ingredients[1])).to.equal(true);
+    expect(pantry.checkIngredientAmount(recipe.ingredients[1])).to.equal(undefined);
   });
 
   it('should be able to check the ingredient amount', function() {
-    expect(pantry.checkIngredientAmount(samplePantryInfo[0],recipe.ingredients[0])).to.equal(recipe.ingredients[0]);
+    expect(pantry.checkIngredientAmount(recipe.ingredients[0])).to.deep.equal({ 'all purpose flour': 0.5 }, { name: 'egg', id: 4, quantity: { amount: 1, unit: 'large' }});
   });
 
 });

@@ -160,7 +160,14 @@ describe('User', function() {
 
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe1);
-    expect(user.checkPantryForIngredients(user.recipesToCook[0])).to.deep.equal([recipe1.ingredients[3]]);
+    expect(user.checkPantryForIngredients(user.recipesToCook[0])).to.deep.equal([{ 'all purpose flour': 0.5 }, {
+      "name": "egg",
+      "id": 4,
+      "quantity": {
+        "amount": 1,
+        "unit": "large"
+      }
+    }]);
   });
 
 });

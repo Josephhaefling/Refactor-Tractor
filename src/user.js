@@ -27,15 +27,26 @@ class User {
   checkPantryForIngredients(recipeToCook) {
     let missingIngredients = recipeToCook.ingredients.map(ingredient => {
     let pantryIngredient = this.pantry.checkPantryIngredients(ingredient)
-    return pantryIngredient === 'true' ? this.pantry.checkIngredientAmount(pantryIngredient, ingredient) : pantryIngredient;
     })
-    let thing = missingIngredients.reduce((missingIngredients, ingredient) =>  {
-      if (ingredient !== true) {
-        missingIngredients.push(ingredient)
+    let notEnoughIngredients = 
+    recipeToCook.ingredients.reduce((acc, ingredient) => {
+      let result = this.pantry.checkIngredientAmount(ingredient)
+      if (!acc.includes(result) && result) {
+          acc.push(result)
       }
-      return missingIngredients
-  }, [])
-    return thing.length > 0 ? thing : true
+      return acc
+    }, []) 
+    console.log('notEnoughIngredients', notEnoughIngredients);
+    
+      return notEnoughIngredients
+    
+  //   let thing = missingIngredients.reduce((missingIngredients, ingredient) =>  {
+  //     if (ingredient !== true) {
+  //       missingIngredients.push(ingredient)
+  //     }
+  //     return missingIngredients
+  // }, [])
+  //   return thing.length > 0 ? thing : true
   };
 }
 
