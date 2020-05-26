@@ -9,14 +9,14 @@ import './css/styles.scss';
 import User from './user';
 import Recipe from './recipe';
 import ingredientsData from './data/ingredient-data';
-
+import Pantry from '../src/pantry'
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let menuOpen = false;
 let pantryBtn = document.querySelector(".my-pantry-btn");
-let pantryInfo = [];
+// let pantryInfo = [];
 let recipes = [];
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
@@ -55,25 +55,20 @@ function createUserRepo(wcUsersData) {
   generateUser(userRepository.userData[randomNum])
 }
 
-// We left off last, getting a random user.
-
 function createIngredientsRepo(ingredientsData) {
   let ingredientsRepository = new IngredientsRepository(ingredientsData)
-  console.log('ingredients Repository', ingredientsRepository);
   return ingredientsData
 }
 
 function createRecipesRepo(recipeData) {
-  console.log('recipeRepository', recipeData)
   let recipesRepository = new RecipesRepository(recipeData)
-  console.log('recipes Repository', recipesRepository);
   return recipeData
 }
 
 // GENERATE A USER ON LOAD
 function generateUser(userInfo) {
-  let pantry = new Pantry(userPantryInfo)
-  user = new User(users[Math.floor(Math.random() * users.length)]);
+  let pantry = new Pantry(userInfo.pantry)
+  user = new User(userInfo, pantry);
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
@@ -81,7 +76,7 @@ function generateUser(userInfo) {
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo();
+  // findPantryInfo();
 }
 
 // function generateUserRepository(userData) {

@@ -1,12 +1,11 @@
 import { expect } from 'chai';
-
 import Pantry from '../src/pantry';
 // import data from '../data/pantry-data';
-
-describe('User', function() {
+describe('Pantry', function() {
   let user;
   let userInfo;
   let recipe;
+  let recipe1;
   let pantry;
   let samplePantryInfo
   beforeEach(function() {
@@ -52,8 +51,60 @@ describe('User', function() {
           }
         },
         {
-          "name": "egg",
+          "name": "rat poison",
           "id": 4,
+          "quantity": {
+            "amount": 1,
+            "unit": "large"
+          }
+        }
+      ],
+      "instructions": [
+        {
+          "number": 1,
+          "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+        },
+        {
+          "number": 2,
+          "instruction": "Add egg and vanilla and mix until combined."
+        },
+        {
+          "number": 3,
+          "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+        }
+      ],
+      "tags": [
+        "antipasti",
+        "starter",
+        "snack",
+        "appetizer",
+        "antipasto",
+        "hor d'oeuvre"
+      ]
+    },
+    recipe1 = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+      "id": 595736,
+      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      "ingredients": [
+        {
+          "name": "all purpose flour",
+          "id": 1,
+          "quantity": {
+            "amount": 1,
+            "unit": "c"
+          }
+        },
+        {
+          "name": "baking soda",
+          "id": 2,
+          "quantity": {
+            "amount": 0.5,
+            "unit": "tsp"
+          }
+        },
+        {
+          "name": "egg",
+          "id": 3,
           "quantity": {
             "amount": 1,
             "unit": "large"
@@ -84,7 +135,6 @@ describe('User', function() {
       ]
     }
   });
-
   it('should be a function', function() {
     expect(Pantry).to.be.a('function');
   });
@@ -94,19 +144,17 @@ describe('User', function() {
   });
 
   it('should be able to check pantry ingredients', function() {
-    expect(pantry.checkPantryIngredients(recipe.ingredients[3])).to.deep.equal(recipe.ingredients[3]);
+    expect(pantry.checkPantryForIngredients(recipe.ingredients)).to.deep.equal([{ '4': { name: 'rat poison', amount: 1 } }]);
   });
 
   it('should be able to check pantry ingredients', function() {
-    expect(pantry.checkPantryIngredients(recipe.ingredients[1])).to.equal(true);
+    expect(pantry.checkPantryForIngredients(recipe1.ingredients)).to.equal(true);
   });
-
+  
   it('should be able to check the ingredient amount', function() {
-    expect(pantry.checkIngredientAmount(samplePantryInfo[1],recipe.ingredients[1])).to.equal(true);
+    expect(pantry.checkIngredientAmount(recipe.ingredients)).to.deep.equal([{ '1': { name: 'all purpose flour', amount: 0.5 } }]);
   });
-
   it('should be able to check the ingredient amount', function() {
-    expect(pantry.checkIngredientAmount(samplePantryInfo[0],recipe.ingredients[0])).to.equal(recipe.ingredients[0]);
+    expect(pantry.checkIngredientAmount(recipe1.ingredients)).to.equal(true);
   });
-
 });
