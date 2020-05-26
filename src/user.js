@@ -24,30 +24,13 @@ class User {
     return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
   }
 
-  checkPantryForIngredients(recipeToCook) {
-    let missingIngredients = recipeToCook.ingredients.map(ingredient => {
-    let pantryIngredient = this.pantry.checkPantryIngredients(ingredient)
-    })
-    let notEnoughIngredients = 
-    recipeToCook.ingredients.reduce((acc, ingredient) => {
-      let result = this.pantry.checkIngredientAmount(ingredient)
-      if (!acc.includes(result) && result) {
-          acc.push(result)
-      }
-      return acc
-    }, []) 
-    console.log('notEnoughIngredients', notEnoughIngredients);
-    
-      return notEnoughIngredients
-    
-  //   let thing = missingIngredients.reduce((missingIngredients, ingredient) =>  {
-  //     if (ingredient !== true) {
-  //       missingIngredients.push(ingredient)
-  //     }
-  //     return missingIngredients
-  // }, [])
-  //   return thing.length > 0 ? thing : true
-  };
+  checkUserPantryForIngredients(recipeToCook) {
+    const recipeIngredients = recipeToCook.ingredients
+    const missingIngredients = this.pantry.checkPantryForIngredients(recipeIngredients);
+    const shortOnIngredients = this.pantry.checkIngredientAmount(recipeIngredients);
+    return missingIngredients.length > 0  || shortOnIngredients.length > 0 ? missingIngredients.concat(shortOnIngredients) : true
+  }
+
 }
 
 module.exports = User;
