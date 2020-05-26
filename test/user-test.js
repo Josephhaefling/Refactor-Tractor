@@ -13,29 +13,7 @@ describe('User', function() {
   beforeEach(function() {
     userInfo =   {
       "id": 1,
-      "name": "Saige O'Kon",
-      "pantry": [
-        {
-          "ingredient": 11477,
-          "amount": 1
-        },
-        {
-          "ingredient": 93820,
-          "amount": 1
-        },
-        {
-          "ingredient": 11297,
-          "amount": 3
-        },
-        {
-          "ingredient": 11547,
-          "amount": 5
-        },
-        {
-          "ingredient": 1082047,
-          "amount": 5
-        }
-      ]
+      "name": "Saige O'Kon"
     }
     pantry = new Pantry([{
       "ingredient": 1,
@@ -218,4 +196,9 @@ describe('User', function() {
     user.decideToCook(recipe2);
     expect(user.checkUserPantryForIngredients(user.recipesToCook[0])).to.deep.equal(true);
   });
+
+  it.only('should be able to add ingredients to the pantry', function() {
+    const ingredientsToAdd = user.checkUserPantryForIngredients(recipe1)
+    expect(user.addItemsToPantry(ingredientsToAdd)).to.equal('thing')
+  })
 });
