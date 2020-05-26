@@ -187,18 +187,25 @@ describe('User', function() {
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe1);
     expect(user.checkUserPantryForIngredients(user.recipesToCook[0])).to.deep.equal([
-  { '4': { name: 'egg', amount: 1 } },
-  { '1': { name: 'all purpose flour', amount: 0.5 } }
-])
-});
+  { name: 'egg', id: 4, quantity: { amount: 1, unit: 'large' } },
+  { name: 'all purpose flour', id: 1, quantity: { amount: 0.5, unit: 'c' } }
+]
+)
+  });
 
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe2);
     expect(user.checkUserPantryForIngredients(user.recipesToCook[0])).to.deep.equal(true);
   });
 
-  it.only('should be able to add ingredients to the pantry', function() {
+  it('should be able to add ingredients to the pantry', function() {
     const ingredientsToAdd = user.checkUserPantryForIngredients(recipe1)
-    expect(user.addItemsToPantry(ingredientsToAdd)).to.equal('thing')
+    user.addItemsToPantry(ingredientsToAdd)
+    expect(user.pantry.ingredients).to.deep.equal([
+  { ingredient: 1, amount: 1.5 },
+  { ingredient: 2, amount: 1 },
+  { ingredient: 3, amount: 1 },
+  { ingredient: 4, amount: 1 }
+  ])
   })
 });
