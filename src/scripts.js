@@ -55,18 +55,13 @@ function createUserRepo(wcUsersData) {
   generateUser(userRepository.userData[randomNum])
 }
 
-// We left off last, getting a random user.
-
 function createIngredientsRepo(ingredientsData) {
   let ingredientsRepository = new IngredientsRepository(ingredientsData)
-  // console.log('ingredients Repository', ingredientsRepository);
   return ingredientsData
 }
 
 function createRecipesRepo(recipeData) {
-  // console.log('recipeRepository', recipeData)
   let recipesRepository = new RecipesRepository(recipeData)
-  // console.log('recipes Repository', recipesRepository);
   return recipeData
 }
 
@@ -74,8 +69,6 @@ function createRecipesRepo(recipeData) {
 function generateUser(userInfo) {
   let pantry = new Pantry(userInfo.pantry)
   user = new User(userInfo, pantry);
- 
-  
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
