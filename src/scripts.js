@@ -23,10 +23,11 @@ let main = document.querySelector("main");
 let menuOpen = false;
 let pantryBtn = document.querySelector(".my-pantry-btn");
 // let pantryInfo = [];
-let recipes = [];
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+let ingredients = [];
+let recipes = [];
 let user;
 
 
@@ -35,46 +36,40 @@ allRecipesBtn.addEventListener("click", domUpdates.showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes)
 // pantryBtn.addEventListener("click", toggleMenu);
-// savedRecipesBtn.addEventListener("click", showSavedRecipes);
+savedRecipesBtn.addEventListener("click", showSavedRecipes);
 // showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-.then(response => response.json())
-.then(data => createUserRepo(data.wcUsersData))
-.catch(err => console.error(err.message))
-
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-.then(response => response.json())
-.then(data => createIngredientsRepo(data.ingredientsData))
-.catch(err => console.error(err.message))
-
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-.then(response => response.json())
-.then(data => createRecipesRepo(data.recipeData))
-.catch(err => console.error(err.message))
-
+Promise.all([
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData').then(response => response.json()),
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData').then(response => response.json()),
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData').then(response => response.json())
+])
+.then(data => createDataSets(data[0].wcUsersData, data[1].ingredientsData, data[2].recipeData))
+.catch(err => console.error(err))
 // const getUser = (user) => {
 //   console.log(user);
 //   main.addEventListener("click", domUpdates.addToMyRecipes)
 // }
 
 
+const createDataSets = (wcUsersData, ingredientsData, recipeData) => {
+  createUserRepo(wcUsersData)
+  createIngredientsRepo(ingredientsData)
+  createRecipesRepo(recipeData)
+  domUpdates.defineData(recipeData, ingredientsData)
+}
+
 function createUserRepo(wcUsersData) {
-  console.log('userRepo');
   let randomNum = Math.floor(Math.random() * wcUsersData.length)
   let userRepository = new UserRepository(wcUsersData)
   generateUser(userRepository.userData[randomNum])
 }
 
 function createIngredientsRepo(ingredientsData) {
-  console.log('ingredientsRepo');
   let ingredientsRepository = new IngredientsRepository(ingredientsData)
   return ingredientsData
 }
 
 function createRecipesRepo(recipeData) {
-  console.log(user);
-  console.log('createRecipesRepo');
   let recipesRepository = new RecipesRepository(recipeData)
   createCards(recipesRepository.recipeData)
   findTags(recipesRepository.recipeData)
@@ -83,11 +78,11 @@ function createRecipesRepo(recipeData) {
 
 // GENERATE A USER ON LOAD
 function generateUser(userInfo) {
-  console.log('genUser');
   const pantry = new Pantry(userInfo.pantry)
   user = new User(userInfo, pantry);
   const firstName = user.name.split(" ")[0];
   domUpdates.getWelcomeMessage(firstName)
+  domUpdates.defineUser(user)
   // getUser(user)
   // domUpdates.user(user)
   // updateUserPantry(user)
@@ -180,14 +175,6 @@ function filterRecipes(filtered) {
   domUpdates.hideUnselectedRecipes(foundRecipes)
 }
 
-
-
-// // FAVORITE RECIPE FUNCTIONALITY
-
-
-
-
-
 function addToMyRecipes() {
  if (event.target.className === "card-apple-icon") {
    let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -217,49 +204,25 @@ function isDescendant(parent, child) {
   return false;
 }
 
-// function showSavedRecipes() {
-//   let unsavedRecipes = recipes.filter(recipe => {
-//     return !user.favoriteRecipes.includes(recipe.id);
-//   });
-//   unsavedRecipes.forEach(recipe => {
-//     let domRecipe = document.getElementById(`${recipe.id}`);
-//     domRecipe.style.display = "none";
-//   });
-//   showMyRecipesBanner();
-// }
+function showSavedRecipes() {
+  let unsavedRecipes = recipes.filter(recipe => {
+    return !user.favoriteRecipes.includes(recipe.id);
+  });
+  unsavedRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
+  });
+  showMyRecipesBanner();
+}
 
 // // CREATE RECIPE INSTRUCTIONS
 
-// function generateRecipeTitle(recipe, ingredients) {
-//   let recipeTitle = `
-//     <button id="exit-recipe-btn">X</button>
-//     <h3 id="recipe-title">${recipe.name}</h3>
-//     <h4>Ingredients</h4>
-//     <p>${ingredients}</p>`
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-// }
 
-// function addRecipeImage(recipe) {
-//   document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
-// }
 
-// function generateIngredients(recipe) {
-//   return recipe && recipe.ingredients.map(i => {
-//     return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
-//   }).join(", ");
-// }
 
-// function generateInstructions(recipe) {
-//   let instructionsList = "";
-//   let instructions = recipe.instructions.map(i => {
-//     return i.instruction
-//   });
-//   instructions.forEach(i => {
-//     instructionsList += `<li>${i}</li>`
-//   });
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
-// }
+
+
+
 
 
 // // TOGGLE DISPLAYS

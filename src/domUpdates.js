@@ -2,8 +2,18 @@ const domUpdates = {
   main: document.querySelector("main"),
   tagList: document.querySelector(".tag-list"),
   fullRecipeInfo: document.querySelector(".recipe-instructions"),
+  user: null,
+  recipeData: null,
+  ingredientsData: null,
 
+  defineData(recipeData, ingredientsData) {
+    this.recipeData = recipeData
+    this.ingredientsData = ingredientsData
+  },
 
+  defineUser(user) {
+    this.user = user
+  },
 
   getWelcomeMessage(firstName) {
     let welcomeMsg = `
@@ -85,17 +95,56 @@ const domUpdates = {
   },
 
    openRecipeInfo(event) {
-     console.log(recipesRepository);
     this.fullRecipeInfo.style.display = "inline";
     let recipeId = event.path.find(e => e.id).id;
-    let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-    generateRecipeTitle(recipe, generateIngredients(recipe));
-    addRecipeImage(recipe);
-    generateInstructions(recipe);
+    let recipe = this.recipeData.find(recipe => recipe.id === Number(recipeId));
+    this.generateRecipeTitle(recipe, this.generateIngredients(recipe));
+    this.addRecipeImage(recipe);
+    this.generateInstructions(recipe);
     this.fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
-  }
+  },
 
+   generateRecipeTitle(recipe, ingredients) {
+    let recipeTitle = `
+      <button id="exit-recipe-btn">X</button>
+      <h3 id="recipe-title">${recipe.name}</h3>
+      <h4>Ingredients</h4>
+      <p>${ingredients}</p>`
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+  },
 
+   addRecipeImage(recipe) {
+    document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+  },
+
+    generateInstructions(recipe) {
+      let instructionsList = "";
+      let instructions = recipe.instructions.map(i => {
+      return i.instruction
+    });
+    instructions.forEach(i => {
+      instructionsList += `<li>${i}</li>`
+    });
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  },
+
+   generateIngredients(recipe) {
+    return recipe && recipe.ingredients.map(i => {
+      let ingredientName = this.getIngredientName(i)
+      return `${this.capitalize(ingredientName.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    }).join(", ");
+  },
+
+  getIngredientName(recipeIngredient) {
+    return this.ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
+  },
+
+  capitalize(words) {
+    return words.split(" ").map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(" ");
+  },
 
 }
 module.exports = domUpdates
