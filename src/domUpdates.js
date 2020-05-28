@@ -2,6 +2,9 @@ const domUpdates = {
   main: document.querySelector("main"),
   tagList: document.querySelector(".tag-list"),
   fullRecipeInfo: document.querySelector(".recipe-instructions"),
+  cookBtn: document.querySelector(".cook-recipe"),
+  costBtn: document.querySelector(".calculate-cost"),
+  checkPantryBtn: document.querySelector(".check-pantry"),
   user: null,
   recipeData: null,
   ingredientsData: null,
@@ -63,6 +66,7 @@ const domUpdates = {
       domRecipe.style.display = "block";
     });
     this.showWelcomeBanner();
+    this.user.viewingFavorites = false;
   },
 
     showWelcomeBanner() {
@@ -76,6 +80,7 @@ const domUpdates = {
       domRecipe.style.display = "none";
     });
   },
+
   fillAppleIcon(event) {
     if (event.target.className === "card-apple-icon") {
       let cardId = parseInt(event.target.closest(".recipe-card").id)
@@ -104,7 +109,8 @@ const domUpdates = {
     this.generateRecipeTitle(recipe, this.generateIngredients(recipe));
     this.addRecipeImage(recipe);
     this.generateInstructions(recipe);
-    this.fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    this.generateRecipeBtns(recipe);
+    this.fullRecipeInfo.insertAdjacentHTML("beforebegin", "<div id='overlay'></div>");
   },
 
    generateRecipeTitle(recipe, ingredients) {
@@ -129,7 +135,23 @@ const domUpdates = {
       instructionsList += `<li>${i}</li>`
     });
     this.fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-    this.fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
+  },
+
+  generateRecipeBtns(recipe) {
+    let recipeButtons = `
+    <button class="cook-recipe">Cook This Recipe</button>
+    <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
+    <button class="check-pantry">Check Pantry</button>
+    `;
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
+  },
+
+  displayRecipeCost() {
+    if (event.target.className === "calculate-cost") {
+     
+    }
+    
   },
 
    generateIngredients(recipe) {
