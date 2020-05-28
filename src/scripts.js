@@ -14,6 +14,8 @@ import Pantry from '../src/pantry'
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
 import './images/cookbook.png'
+import './images/seasoning.png'
+
 
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
@@ -152,6 +154,7 @@ function findCheckedBoxes() {
   findTaggedRecipes(selectedTags);
 }
 
+//Do we need to use the method in the user?
 function findTaggedRecipes(selected) {
   let filteredResults = [];
   selected.forEach(tag => {
