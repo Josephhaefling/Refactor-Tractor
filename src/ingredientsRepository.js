@@ -2,6 +2,10 @@ class IngredientsRepository {
   constructor(ingredientsData) {
     this.ingredientsData = ingredientsData
   }
+  //needs test
+  getIngredientName(ingredient) {
+    return this.ingredientsData.find(fullIngredient => fullIngredient.id === ingredient.ingredient)
+  }
 
   getIngredientsCost(ingredientsList) {
     return ingredientsList.reduce((acc, ingredient) => {

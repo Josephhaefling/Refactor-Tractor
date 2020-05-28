@@ -5,6 +5,8 @@ const domUpdates = {
   user: null,
   recipeData: null,
   ingredientsData: null,
+  menuOpen: false,
+
 
   defineData(recipeData, ingredientsData) {
     this.recipeData = recipeData
@@ -54,7 +56,8 @@ const domUpdates = {
     }).join(" ");
   },
 
-   showAllRecipes(recipes) {
+   showAllRecipes(passedRecipes) {
+     let recipes = passedRecipes || this.recipeData
     recipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "block";
@@ -145,6 +148,21 @@ const domUpdates = {
       return word.charAt(0).toUpperCase() + word.slice(1);
     }).join(" ");
   },
+
+   showMyRecipesBanner() {
+    document.querySelector(".welcome-msg").style.display = "none";
+    document.querySelector(".my-recipes-banner").style.display = "block";
+  },
+
+   toggleMenu() {
+    var menuDropdown = document.querySelector(".drop-menu");
+    this.menuOpen = !this.menuOpen;
+    if (this.menuOpen) {
+      menuDropdown.style.display = "block";
+    } else {
+      menuDropdown.style.display = "none";
+    }
+  }
 
 }
 module.exports = domUpdates
