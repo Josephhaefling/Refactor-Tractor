@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import User from '../src/user';
-import Recipe from '../src/recipe'
-import Pantry  from '../src/pantry'
+import Recipe from '../src/recipe';
+import Pantry  from '../src/pantry';
 // import data from '../data/users-data';
 describe('User', function() {
   let user;
@@ -13,29 +13,7 @@ describe('User', function() {
   beforeEach(function() {
     userInfo =   {
       "id": 1,
-      "name": "Saige O'Kon",
-      "pantry": [
-        {
-          "ingredient": 11477,
-          "amount": 1
-        },
-        {
-          "ingredient": 93820,
-          "amount": 1
-        },
-        {
-          "ingredient": 11297,
-          "amount": 3
-        },
-        {
-          "ingredient": 11547,
-          "amount": 5
-        },
-        {
-          "ingredient": 1082047,
-          "amount": 5
-        }
-      ]
+      "name": "Saige O'Kon"
     }
     pantry = new Pantry([{
       "ingredient": 1,
@@ -209,13 +187,25 @@ describe('User', function() {
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe1);
     expect(user.checkUserPantryForIngredients(user.recipesToCook[0])).to.deep.equal([
-  { '4': { name: 'egg', amount: 1 } },
-  { '1': { name: 'all purpose flour', amount: 0.5 } }
-])
-});
+  { name: 'egg', id: 4, quantity: { amount: 1, unit: 'large' } },
+  { name: 'all purpose flour', id: 1, quantity: { amount: 0.5, unit: 'c' } }
+]
+)
+  });
 
   it('should be able to check pantry for ingredients', function() {
     user.decideToCook(recipe2);
     expect(user.checkUserPantryForIngredients(user.recipesToCook[0])).to.deep.equal(true);
   });
+
+  it('should be able to add ingredients to the pantry', function() {
+    const ingredientsToAdd = user.checkUserPantryForIngredients(recipe1)
+    user.addItemsToPantry(ingredientsToAdd)
+    expect(user.pantry.ingredients).to.deep.equal([
+  { ingredient: 1, amount: 1.5 },
+  { ingredient: 2, amount: 1 },
+  { ingredient: 3, amount: 1 },
+  { ingredient: 4, amount: 1 }
+  ])
+  })
 });

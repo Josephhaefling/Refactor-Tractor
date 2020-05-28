@@ -6,7 +6,7 @@ class User {
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
-  
+
   saveRecipe(recipe) {
     this.favoriteRecipes.push(recipe);
   }
@@ -31,6 +31,17 @@ class User {
     return missingIngredients.length > 0  || shortOnIngredients.length > 0 ? missingIngredients.concat(shortOnIngredients) : true
   }
 
+  addItemsToPantry(ingredientsToAdd) {
+  ingredientsToAdd.forEach(ingredient => {
+    let t = this.pantry.ingredients.find(pantryIngredient => pantryIngredient.ingredient === ingredient.id)
+    if(!t) {
+      this.pantry.ingredients.push({ingredient: ingredient.id, amount: ingredient.quantity.amount})
+    } else {
+      const indexOfT = this.pantry.ingredients.indexOf(t)
+      this.pantry.ingredients[indexOfT].amount += ingredient.quantity.amount
+      }
+    })
+  }
 }
 
 module.exports = User;
