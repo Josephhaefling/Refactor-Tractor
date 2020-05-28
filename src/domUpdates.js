@@ -162,6 +162,11 @@ const domUpdates = {
     } else {
       menuDropdown.style.display = "none";
     }
+  },
+
+  hideRecipes(recipe) {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domRecipe.style.display = "none";
   }
 
 }

@@ -40,7 +40,9 @@ filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes)
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
-// showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+showPantryRecipes.addEventListener("click", function() {
+  findCheckedPantryBoxes(ingredientsRepository);
+});
 
 Promise.all([
 fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData').then(response => response.json()),
@@ -69,7 +71,7 @@ function createUserRepo(wcUsersData) {
 }
 
 function createIngredientsRepo(ingredientsData) {
-  let ingredientsRepository = new IngredientsRepository(ingredientsData)
+  ingredientsRepository = new IngredientsRepository(ingredientsData)
   findPantryInfo(ingredientsRepository)
   return ingredientsData
 }
@@ -253,7 +255,7 @@ function findPantryInfo(ingredientsRepository) {
   const pantryIngredients = user.pantry.ingredients
 
   pantryIngredients.forEach(pantryIngredient => {
-    fullPantryIngredients.push(ingredientsRepository.getIngredientName(pantryIngredient))
+    fullPantryIngredients.push(ingredientsRepository.getIngredientName(pantryIngredient, 'ingredient'))
   })
   // console.log('fullPantry', fullPantryIngredients);
   // console.log('pantry', pantryIngredients);
@@ -289,31 +291,31 @@ function displayPantryInfo(pantry, amountsPantry) {
   });
 }
 
-// function findCheckedPantryBoxes() {
-//   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
-//   let pantryCheckboxInfo = Array.from(pantryCheckboxes)
-//   let selectedIngredients = pantryCheckboxInfo.filter(box => {
-//     return box.checked;
-//   })
-//   showAllRecipes();
-//   if (selectedIngredients.length > 0) {
-//     findRecipesWithCheckedIngredients(selectedIngredients);
-//   }
-// }
+function findCheckedPantryBoxes(ingredientsRepository) {
+  let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
+  let pantryCheckboxInfo = Array.from(pantryCheckboxes)
+  let selectedIngredients = pantryCheckboxInfo.filter(box => {
+    return box.checked;
+  })
+  domUpdates.showAllRecipes();
+  if (selectedIngredients.length > 0) {
+    findRecipesWithCheckedIngredients(selectedIngredients, ingredientsRepository);
+  }
+}
 
-// function findRecipesWithCheckedIngredients(selected) {
-//   let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
-//   let ingredientNames = selected.map(item => {
-//     return item.id;
-//   })
-//   recipes.forEach(recipe => {
-//     let allRecipeIngredients = [];
-//     recipe.ingredients.forEach(ingredient => {
-//       allRecipeIngredients.push(ingredient.name);
-//     });
-//     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-//       let domRecipe = document.getElementById(`${recipe.id}`);
-//       domRecipe.style.display = "none";
-//     }
-//   })
-// }
+function findRecipesWithCheckedIngredients(selected, ingredientsRepository) {
+  let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
+  let ingredientNames = selected.map(item => {
+    return item.id;
+  })
+  recipes.forEach(recipe => {
+    let allRecipeIngredients = [];    
+    recipe.ingredients.forEach(ingredient => {  
+      let ingredientName = ingredientsRepository.getIngredientName(ingredient, 'id');      
+      allRecipeIngredients.push(ingredientName.name);
+    });
+    if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
+     domUpdates.hideRecipes(recipe);
+    }
+  })
+}
