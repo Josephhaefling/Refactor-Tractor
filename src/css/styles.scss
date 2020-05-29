@@ -1,3 +1,6 @@
+$primary-green: #C4EB67;
+$secondary-green: #359567;
+
 body {
   background-color: #5B7894;
   display: grid;
@@ -29,7 +32,7 @@ h2 {
 }
 
 h3 {
-  color: #359567;
+  color: $secondary-green;
   cursor: pointer;
   height: 17%;
   margin: 5px 5px 10px 0px;
@@ -37,14 +40,13 @@ h3 {
 }
 
 h4 {
-  color: #359567;
-  background-color: #C4EB67;
+  color: $secondary-green;
+  background-color: $primary-green;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
   width: max-content;
 }
-
 
 /* HEADER */
 header {
@@ -56,7 +58,7 @@ header {
 }
 
 span {
-  color: #C4EB67;
+  color: $primary-green;
   font-weight: 400;
 }
 
@@ -66,11 +68,13 @@ span {
   width: 35px;
 }
 
-.search-btn {
-  border-left: 3px outset #C4EB67;
-  border-radius: 0px 15px 15px 0px;
-  padding: 1%;
-}
+// This class, .search-btn, is not currently being used.
+
+// .search-btn {
+//   border-left: 3px outset $primary-green;
+//   border-radius: 0px 15px 15px 0px;
+//   padding: 1%;
+// }
 
 .nav-btn {
   align-items: center;
@@ -91,7 +95,7 @@ span {
 }
 
 .nav-btn:hover {
-  color: #C4EB67;
+  color: $primary-green;
   font-size: 14px;
   text-shadow: 0px 2px 4px black;
   transition: .4s ease;
@@ -104,14 +108,13 @@ span {
 }
 
 .saved-ingredients-btn {
-  border-left: 3px solid #C4EB67;
+  border-left: 3px solid $primary-green;
 }
 
 .ing-pan-btn {
   margin: 1% 0%;
   padding: 1px 6px 5px 0px;
 }
-
 
 /* BANNER IMAGE*/
 .banner-image {
@@ -143,7 +146,6 @@ span {
   margin-top: 50px;
 }
 
-
 /* FILTER SIDEBAR */
 aside {
   background-color: white;
@@ -171,7 +173,6 @@ li {
   margin: 2px;
 }
 
-
 /* RECIPE CARD SECTION */
 main {
   grid-area: main;
@@ -184,7 +185,7 @@ main {
 
 .recipe-card {
   background-color: white;
-  border: 2px solid #C4EB67;
+  border: 2px solid $primary-green;
   border-radius: 7px;
   cursor: pointer;
   height: 270px;
@@ -206,7 +207,7 @@ main {
 }
 
 .recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px #C4EB67;
+  text-shadow: 0px 0px 4px $primary-green;
   transition: .8s ease;
 }
 
@@ -238,7 +239,7 @@ main {
 }
 
 .text {
-  background: #359567;
+  background: $secondary-green;
   color: white;
   font-weight: 700;
   font-size: 0px;
@@ -250,12 +251,14 @@ main {
   transition: .5s ease;
 }
 
-
 /* BUTTONS */
 .show-pantry-recipes-btn,
 .show-all-btn,
-.filter-btn {
-  background-color: #359567;
+.filter-btn, 
+.cook-recipe,
+.calculate-cost,
+.check-pantry {
+  background-color: $secondary-green;
   border: 0;
   border-radius: 3px;
   color: white;
@@ -276,10 +279,14 @@ main {
   width: 200px;
 }
 
-.filter-btn:hover {
+.show-all-btn:hover, 
+.filter-btn:hover,
+.cook-recipe:hover,
+.calculate-cost:hover,
+.check-pantry:hover {
   background-color: #84C8A4;
+  transition: 0.5s ease;
 }
-
 
 /* PANTRY LIST */
 .drop-menu {
@@ -298,7 +305,7 @@ main {
 }
 
 .drop-menu h2 {
-  color: #359567;
+  color: $secondary-green;
   margin: 0px;
 }
 
@@ -308,11 +315,10 @@ main {
   text-align: left;
 }
 
-
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
   background: white;
-  border: 3px solid #C4EB67;
+  border: 3px solid $primary-green;
   border-radius: 10px;
   box-shadow: 1px 1px 115px black;
   display: none;
@@ -329,9 +335,9 @@ main {
 
 #exit-recipe-btn {
   background: white;
-  border: 2px double #359567;
+  border: 2px double $secondary-green;
   border-radius: 5px;
-  color: #359567;
+  color: $secondary-green;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
@@ -341,7 +347,7 @@ main {
 }
 
 #exit-recipe-btn:hover {
-  background: #C4EB67;
+  background: $primary-green;
   transition: .3s ease;
 }
 
@@ -359,7 +365,7 @@ main {
 
 .recipe-instructions h4 {
   background: white;
-  color: #359567;
+  color: $secondary-green;
 }
 
 .recipe-instructions p {
