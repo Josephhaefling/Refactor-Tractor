@@ -41,6 +41,7 @@ main.addEventListener("click", function() {
   addToMyRecipes();
   domUpdates.displayRecipeCost();
   getRecipeCost();
+  checkPantryForIngredients()
 });
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
@@ -253,6 +254,7 @@ function findPantryInfo(ingredientsRepository) {
   const pantryIngredients = user.pantry.ingredients
 
   pantryIngredients.forEach(pantryIngredient => {
+    // console.log(pantryIngredient);
     fullPantryIngredients.push(ingredientsRepository.getIngredientName(pantryIngredient, 'ingredient'))
   })
   displayPantryInfo(fullPantryIngredients.sort((a, b) => a.name.localeCompare(b.name)), pantryIngredients);
@@ -298,9 +300,21 @@ function findRecipesWithCheckedIngredients(selected, ingredientsRepository) {
 }
 
 function getRecipeCost() {
+  if (event.target.classList.value === 'calculate-cost') {
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipes.find(recipe => recipe.id === Number(recipeId));
   let userChecked = user.checkUserPantryForIngredients(recipe);
   let costOfRecipe = Math.round(ingredientsRepository.getIngredientsCost(userChecked)) / 100
   domUpdates.displayRecipeCost(costOfRecipe)
+  }
+}
+
+const checkPantryForIngredients = () => {
+  if (event.target.classList.value === 'check-pantry') {
+  let recipeId = event.path.find(e => e.id).id;
+  let recipe = recipes.find(recipe => recipe.id === Number(recipeId));
+  let userChecked = user.checkUserPantryForIngredients(recipe);
+  let thing = userChecked.map(checkedIngredient => ingredientsRepository.getIngredientName(checkedIngredient, 'id'))
+  domUpdates.displayNeededIngredients(thing, userChecked)
+  }
 }

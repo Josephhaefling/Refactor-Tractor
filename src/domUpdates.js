@@ -139,9 +139,9 @@ const domUpdates = {
 
   generateRecipeBtns(recipe) {
     let recipeButtons = `
-    <button class="cook-recipe">Cook This Recipe</button>
+    <button class="cook-recipe" id="${recipe.id}">Cook This Recipe</button>
     <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
-    <button class="check-pantry">Check Pantry</button>
+    <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
     `;
     this.fullRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
   },
@@ -151,7 +151,15 @@ const domUpdates = {
     if (event.target.className === "calculate-cost" && costOfRecipe !== undefined) {
       cookBtn.insertAdjacentHTML("beforebegin", `<p class="instructions">$${costOfRecipe}</p>`);
     }
+  },
 
+  displayNeededIngredients(neededIngredients, userChecked) {
+    let cookBtn = document.querySelector(".cook-recipe");
+    neededIngredients.forEach(neededIngredient => {
+    let thing = userChecked[neededIngredients.indexOf(neededIngredient)].quantity.amount
+      cookBtn.insertAdjacentHTML("beforebegin", `<p class="needed-ingredients">${neededIngredient.name}: ${thing}</p>`);
+
+    })
   },
 
    generateIngredients(recipe) {

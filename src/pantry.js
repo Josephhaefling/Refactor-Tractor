@@ -26,7 +26,6 @@ class Pantry {
         }
       return acc
     }, [])
-    console.log('needed', ingredientsNeeded);
     if (ingredientsNeeded !== true) {
       return ingredientsNeeded
     }
