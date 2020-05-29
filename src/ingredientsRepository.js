@@ -3,8 +3,9 @@ class IngredientsRepository {
     this.ingredientsData = ingredientsData
   }
   //needs test
-  getIngredientName(ingredient) {
-    return this.ingredientsData.find(fullIngredient => fullIngredient.id === ingredient.ingredient)
+  getIngredientName(ingredient, key) {
+
+    return this.ingredientsData.find(fullIngredient => fullIngredient.id === ingredient[key])
   }
 
   getIngredientsCost(ingredientsList) {

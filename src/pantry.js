@@ -16,6 +16,8 @@ class Pantry {
     return notEnoughIngredients.length > 0 ? notEnoughIngredients : true
   }
   checkPantryForIngredients(recipeIngredients) {
+    console.log(recipeIngredients);
+    
     const ingredientsNeeded = recipeIngredients.reduce((acc, recipeIngredient) => {
       const missingIngredients = this.ingredients.find(pantryIngredient  => pantryIngredient.ingredient === recipeIngredient.id)
         if (!missingIngredients) {
@@ -26,15 +28,5 @@ class Pantry {
     return ingredientsNeeded.length > 0 ? ingredientsNeeded : true
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 module.exports = Pantry;
