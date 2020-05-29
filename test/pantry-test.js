@@ -154,7 +154,8 @@ describe('Pantry', function () {
   it('should be able to check pantry ingredients', function () {
     expect(pantry.checkPantryForIngredients(recipe1.ingredients)).to.equal(true);
   });
-  it('should be able to check the ingredient amount', function () {
+  it.only('should be able to check the ingredient amount', function () {
+    console.log('test', recipe.ingredients);
     expect(pantry.checkIngredientAmount(recipe.ingredients)).to.deep.equal([{
       "id": 1,
       "name": "all purpose flour",

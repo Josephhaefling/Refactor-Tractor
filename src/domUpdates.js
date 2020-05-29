@@ -2,7 +2,6 @@ const domUpdates = {
   main: document.querySelector("main"),
   tagList: document.querySelector(".tag-list"),
   fullRecipeInfo: document.querySelector(".recipe-instructions"),
-  cookBtn: document.querySelector(".cook-recipe"),
   costBtn: document.querySelector(".calculate-cost"),
   checkPantryBtn: document.querySelector(".check-pantry"),
   user: null,
@@ -147,11 +146,12 @@ const domUpdates = {
     this.fullRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
   },
 
-  displayRecipeCost() {
-    if (event.target.className === "calculate-cost") {
-     
+  displayRecipeCost(costOfRecipe) {
+    let cookBtn = document.querySelector(".cook-recipe");
+    if (event.target.className === "calculate-cost" && costOfRecipe !== undefined) {
+      cookBtn.insertAdjacentHTML("beforebegin", `<p class="instructions">$${costOfRecipe}</p>`);
     }
-    
+
   },
 
    generateIngredients(recipe) {

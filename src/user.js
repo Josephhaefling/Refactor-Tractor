@@ -29,7 +29,9 @@ class User {
     const recipeIngredients = recipeToCook.ingredients
     const missingIngredients = this.pantry.checkPantryForIngredients(recipeIngredients);
     const shortOnIngredients = this.pantry.checkIngredientAmount(recipeIngredients);
-    return missingIngredients.length > 0  || shortOnIngredients.length > 0 ? missingIngredients.concat(shortOnIngredients) : true
+    if(missingIngredients !== true || shortOnIngredients.length > 0) {
+      return shortOnIngredients === true ? missingIngredients : missingIngredients.concat(shortOnIngredients)
+    }
   }
 
   addItemsToPantry(ingredientsToAdd) {

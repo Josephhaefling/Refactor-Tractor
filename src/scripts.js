@@ -156,7 +156,7 @@ function findTaggedRecipes(selected, recipeList) {
   let filteredResults = [];
   selected.forEach(tag => {
     console.log(recipeList);
-    
+
     let allRecipes = recipes.filter(recipe => {
       return recipe.tags.includes(tag.id);
     });
@@ -286,9 +286,9 @@ function findRecipesWithCheckedIngredients(selected, ingredientsRepository) {
     return item.id;
   })
   recipes.forEach(recipe => {
-    let allRecipeIngredients = [];    
-    recipe.ingredients.forEach(ingredient => {  
-      let ingredientName = ingredientsRepository.getIngredientName(ingredient, 'id');      
+    let allRecipeIngredients = [];
+    recipe.ingredients.forEach(ingredient => {
+      let ingredientName = ingredientsRepository.getIngredientName(ingredient, 'id');
       allRecipeIngredients.push(ingredientName.name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
@@ -301,8 +301,6 @@ function getRecipeCost() {
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipes.find(recipe => recipe.id === Number(recipeId));
   let userChecked = user.checkUserPantryForIngredients(recipe);
-  // let checkedPantry = user.pantry.checkPantryForIngredients(recipe.ingredients);
-  // let checkedAmount = user.pantry.checkIngredientAmount(recipe.ingredients);
-  console.log(userChecked);
-    
+  let costOfRecipe = Math.round(ingredientsRepository.getIngredientsCost(userChecked)) / 100
+  domUpdates.displayRecipeCost(costOfRecipe)
 }
