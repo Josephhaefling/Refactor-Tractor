@@ -1,10 +1,17 @@
-$primary-green: #C4EB67;
-$secondary-green: #359567;
+@import 'variables';
+@import 'header';
+@import 'nav';
 
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+
+}
 body {
+  @extend html;
   background-color: #5B7894;
   display: grid;
-  font-family: "Quicksand", sans-serif;
+  font-family: $main-and-button-font;
   grid-template-columns: 1fr 5fr;
   grid-template-areas:
     "header header"
@@ -19,7 +26,7 @@ body {
 h1 {
   align-self: center;
   color: white;
-  font-family: "Sulphur Point", sans-serif;
+  font-family: $h1-font;
   font-size: 50px;
   margin: 0%;
   padding: 0.5% 0.7% 0%;
@@ -27,7 +34,7 @@ h1 {
 }
 
 h2 {
-  color: #84C8A4;
+  color:$secondary-green;
   margin: 10px 0px 10px 0px;
 }
 
@@ -41,79 +48,11 @@ h3 {
 
 h4 {
   color: $secondary-green;
-  background-color: $primary-green;
+  border: 1px solid $primary-green;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
   width: max-content;
-}
-
-/* HEADER */
-header {
-  display: flex;
-  flex-direction: row;
-  grid-area: header;
-  padding: 0% 0%;
-  width: 100%;
-}
-
-span {
-  color: $primary-green;
-  font-weight: 400;
-}
-
-.header-apple-icon {
-  height: 40px;
-  margin-left: 5px;
-  width: 35px;
-}
-
-// This class, .search-btn, is not currently being used.
-
-// .search-btn {
-//   border-left: 3px outset $primary-green;
-//   border-radius: 0px 15px 15px 0px;
-//   padding: 1%;
-// }
-
-.nav-btn {
-  align-items: center;
-  background: #5B7894 no-repeat;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  font-size: 0px;
-  font-weight: 700;
-  justify-content: center;
-  margin: 0%;
-  outline: none;
-  overflow: hidden;
-  text-align: center;
-  transition: .4s ease;
-  width: 15%;
-}
-
-.nav-btn:hover {
-  color: $primary-green;
-  font-size: 14px;
-  text-shadow: 0px 2px 4px black;
-  transition: .4s ease;
-}
-
-.nav-btn img {
-  max-height: 40px;
-  max-width: 40px;
-  padding: 2px 0px;
-}
-
-.saved-ingredients-btn {
-  border-left: 3px solid $primary-green;
-}
-
-.ing-pan-btn {
-  margin: 1% 0%;
-  padding: 1px 6px 5px 0px;
 }
 
 /* BANNER IMAGE*/
@@ -182,6 +121,8 @@ main {
   align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .recipe-card {
@@ -264,7 +205,7 @@ main {
   border-radius: 3px;
   color: white;
   cursor: pointer;
-  font-family: "Quicksand", sans-serif;
+  font-family: $main-and-button-font;
   font-size: 12pt;
   font-weight: bold;
   padding: 5px 10px 5px 10px;
@@ -387,4 +328,54 @@ main {
   top:0;
   width:100%;
   z-index:100;
+}
+@media only screen and (max-width: 500px) {
+  body {
+    background-color: #5B7894;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: $main-and-button-font;
+    grid-template-columns: 1fr 5fr;
+    grid-template-areas:
+      "header header"
+      "image image"
+      "aside main";
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  aside {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    text-align: center;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .wrap {
+    background-color: white;
+    height: 66vh;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    width: 100vw;
+
+  }
+
+  ul {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 131px;
+  }
+
+  .filter-btn {
+    margin-right: 11px;
+  }
+  
 }

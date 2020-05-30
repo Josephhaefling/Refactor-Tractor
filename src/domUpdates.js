@@ -22,26 +22,26 @@ const domUpdates = {
 
   getWelcomeMessage(firstName) {
     let welcomeMsg = `
-      <div class="welcome-msg">
+      <section class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
-      </div>`;
+      </section>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
       welcomeMsg);
   },
 
   addRecipesToDom(recipeInfo, shortRecipeName) {
     let cardHtml = `
-      <div class="recipe-card" id=${recipeInfo.id}>
+      <article class="recipe-card" id=${recipeInfo.id}>
         <h3 maxlength="40">${shortRecipeName}</h3>
-        <div class="card-photo-container">
+        <article class="card-photo-container">
           <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-          <div class="text">
-            <div>Click for Instructions</div>
-          </div>
-        </div>
+          <article class="text">
+            <article>Click for Instructions</article>
+          </article>
+        </article>
         <h4>${recipeInfo.tags[0]}</h4>
         <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-      </div>`
+      </article>`
     this.main.insertAdjacentHTML("beforeend", cardHtml);
   },
 
@@ -110,7 +110,7 @@ const domUpdates = {
     this.addRecipeImage(recipe);
     this.generateInstructions(recipe);
     this.generateRecipeBtns(recipe);
-    this.fullRecipeInfo.insertAdjacentHTML("beforebegin", "<div id='overlay'></div>");
+    this.fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
   },
 
    generateRecipeTitle(recipe, ingredients) {
@@ -179,12 +179,18 @@ const domUpdates = {
    toggleMenu() {
     var menuDropdown = document.querySelector(".drop-menu");
     this.menuOpen = !this.menuOpen;
-    if (this.menuOpen) {
-      menuDropdown.style.display = "block";
-    } else {
-      menuDropdown.style.display = "none";
-    }
-  },
+    menuDropdown.style.display = this.menuOpen ? 'block': 'none';
+    // let ariaExpanded = menuDropdown.getAttribute('aria-expanded')
+    // console.log('ariaExpanded', ariaExpanded)
+    // ariaExpanded = ariaExpanded === false ? true : false
+    //   // ariaExpanded = true;
+    //   console.log('ariaExpanded2', ariaExpanded)
+    },
+   
+    
+      // ariaExpanded.setAttribute('aria-expanded', true)
+    
+  
 
   hideRecipes(recipe) {
     let domRecipe = document.getElementById(`${recipe.id}`);
@@ -193,3 +199,16 @@ const domUpdates = {
 
 }
 module.exports = domUpdates
+
+
+// let button = document.getElementById("menu-button");
+
+// button.addEventListener("click", function() {
+//   let attr = button.getAttribute("aria-expanded");
+  
+//   if (attr === 'true') {
+//      button.setAttribute("aria-expanded", false);
+//   } else {
+//      button.setAttribute("aria-expanded", true);
+//   }
+// });

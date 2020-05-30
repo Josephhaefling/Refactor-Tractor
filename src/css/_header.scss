@@ -1,0 +1,18 @@
+header {
+  display: flex;
+  flex-direction: row;
+  grid-area: header;
+  padding: 0% 0%;
+  width: 100%;
+}
+
+span {
+  color: $primary-green;
+  font-weight: 400;
+}
+
+.header-apple-icon {
+  height: 40px;
+  margin-left: 5px;
+  width: 35px;
+}
