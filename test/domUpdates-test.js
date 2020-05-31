@@ -18,6 +18,13 @@ describe('domUpdates', function(){
     expect(domUpdates.defineData).to.have.been.called(1);
   });
 
+  it.only('Should Spy on defineData', function() {
+    global.domUpdates 
+    chai.spy.on(domUpdates, ['defineData'], () => {});
+    domUpdates.defineData()
+    expect(domUpdates.defineData).to.have.been.called(1);
+    expect(domUpdates.defineData).to.have.been.called.with
+  });
 
 
 

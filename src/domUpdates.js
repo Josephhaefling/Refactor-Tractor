@@ -1,19 +1,20 @@
 const domUpdates = {
-  main: document.querySelector("main"),
-  tagList: document.querySelector(".tag-list"),
-  fullRecipeInfo: document.querySelector(".recipe-instructions"),
-  cookBtn: document.querySelector(".cook-recipe"),
-  costBtn: document.querySelector(".calculate-cost"),
-  checkPantryBtn: document.querySelector(".check-pantry"),
-  user: null,
-  recipeData: null,
-  ingredientsData: null,
-  menuOpen: false,
+  // main: document.querySelector("main"),
+  // tagList: document.querySelector(".tag-list"),
+  // fullRecipeInfo: document.querySelector(".recipe-instructions"),
+  // cookBtn: document.querySelector(".cook-recipe"),
+  // costBtn: document.querySelector(".calculate-cost"),
+  // checkPantryBtn: document.querySelector(".check-pantry"),
+  // user: null,
+  // recipeData: null,
+  // ingredientsData: null,
+  // menuOpen: false,
 
 
   defineData(recipeData, ingredientsData) {
     this.recipeData = recipeData
     this.ingredientsData = ingredientsData
+    console.log(recipeData)
   },
 
   defineUser(user) {
@@ -30,6 +31,7 @@ const domUpdates = {
   },
 
   addRecipesToDom(recipeInfo, shortRecipeName) {
+    let main = document.querySelector("main")
     let cardHtml = `
       <article class="recipe-card" id=${recipeInfo.id}>
         <h3 maxlength="40">${shortRecipeName}</h3>
@@ -42,14 +44,15 @@ const domUpdates = {
         <h4>${recipeInfo.tags[0]}</h4>
         <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </article>`
-    this.main.insertAdjacentHTML("beforeend", cardHtml);
+    main.insertAdjacentHTML("beforeend", cardHtml);
   },
 
    listTags(allTags) {
-    allTags.forEach(tag => {
+     let tagList = document.querySelector('.tag-list')
+     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
         <label for="${tag}">${this.capitalize(tag)}</label></li>`;
-      this.tagList.insertAdjacentHTML("beforeend", tagHtml);
+      tagList.insertAdjacentHTML("beforeend", tagHtml);
     });
   },
 
@@ -147,12 +150,12 @@ const domUpdates = {
     this.fullRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
   },
 
-  displayRecipeCost() {
-    if (event.target.className === "calculate-cost") {
+  // displayRecipeCost() {
+  //   if (event.target.className === "calculate-cost") {
      
-    }
+  //   }
     
-  },
+  // },
 
    generateIngredients(recipe) {
     return recipe && recipe.ingredients.map(i => {
