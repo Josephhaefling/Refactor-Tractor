@@ -320,16 +320,17 @@ function searchSavedRecipes(event) {
     })
   }
 }
-//   function searchSavedIngredients(event) {
-//     if (event.target.className === 'search-button') {
-//       let searchInputValue = domUpdates.capitalize(searchInput.value)
-//       user.favoriteRecipes.map(favoriteRecipe => {
-//         let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
-//         console.log(favoritedRecipe);
-//         if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
-//           domUpdates.displaySearchedFavorite(favoritedRecipe)
-//         }
-//       })
-// }
-//   }
+
+  function searchSavedIngredients(event) {
+    if (event.target.className === 'search-button') {
+      let searchInputValue = domUpdates.capitalize(searchInput.value)
+      user.favoriteRecipes.map(favoriteRecipe => {
+        let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+        console.log(favoritedRecipe);
+        if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
+          domUpdates.displaySearchedFavorite(favoritedRecipe)
+        }
+      })
+}
+  }
 // ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())
