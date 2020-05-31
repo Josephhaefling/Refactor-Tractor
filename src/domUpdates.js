@@ -153,13 +153,14 @@ const domUpdates = {
     }
   },
 
-  displayNeededIngredients(neededIngredients, userChecked) {
+  displayNeededIngredients(neededIngredients, userChecked, recipe) {
+    console.log(neededIngredients);
     let cookBtn = document.querySelector(".cook-recipe");
     neededIngredients.forEach(neededIngredient => {
     let thing = userChecked[neededIngredients.indexOf(neededIngredient)].quantity.amount
       cookBtn.insertAdjacentHTML("beforebegin", `<p class="needed-ingredients">${neededIngredient.name}: ${thing}</p>`);
-
     })
+    this.fullRecipeInfo.insertAdjacentHTML("beforeend", `<button class="add-ingredients-btn" id=" ${recipe.id}">Add to Pantry</button>`);
   },
 
    generateIngredients(recipe) {
@@ -197,6 +198,21 @@ const domUpdates = {
   hideRecipes(recipe) {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
+  },
+
+  updatePantryInfo(pantry, amountsPantry) {
+    let pantryList = document.querySelector(".pantry-list")
+    pantry.forEach(ingredient => pantryList.innerHTML = '')
+    pantry.forEach(ingredient => {
+      let amountOfIngredient = amountsPantry.find(userIngredient => userIngredient.ingredient === ingredient.id)
+      let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
+        <label for="${ingredient.name}">${ingredient.name}, ${amountOfIngredient.amount}</label></li>`;
+        pantryList.insertAdjacentHTML("beforeend",ingredientHtml);
+    });
+  },
+
+  cookMessage() {
+    console.log('boo');
   }
 
 }
