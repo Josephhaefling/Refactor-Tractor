@@ -203,7 +203,6 @@ function addToMyRecipes() {
  }
 }
 
-
 function isDescendant(parent, child) {
   let node = child;
   while (node !== null) {
@@ -308,10 +307,6 @@ function getRecipeCost() {
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipes.find(recipe => recipe.id === Number(recipeId));
   let userChecked = user.checkUserPantryForIngredients(recipe);
-  // let checkedPantry = user.pantry.checkPantryForIngredients(recipe.ingredients);
-  // let checkedAmount = user.pantry.checkIngredientAmount(recipe.ingredients);
-  console.log(userChecked);
-    
 }
 
 function searchSavedRecipes(event) {
@@ -323,8 +318,6 @@ function searchSavedRecipes(event) {
         domUpdates.displaySearchedFavorite(favoritedRecipe)
       }
     })
-    // searchInputValue user.favoriteRecipes.
-    // console.log(searchInputValue)
   }
 }
 //   function searchSavedIngredients(event) {
