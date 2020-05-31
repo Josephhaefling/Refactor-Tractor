@@ -26,9 +26,12 @@ let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+let searchInput = document.querySelector(".search-input")
+let searchButton = document.querySelector(".search-button")
 let recipes = [];
 let ingredientsRepository;
 let user;
+let recipesRepository;
 
 
 allRecipesBtn.addEventListener("click", function() {
@@ -41,6 +44,10 @@ main.addEventListener("click", function() {
   addToMyRecipes();
   domUpdates.displayRecipeCost();
   getRecipeCost();
+});
+searchButton.addEventListener('click', function() {
+  searchSavedRecipes(event)
+  searchSavedIngredients(event)
 });
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
@@ -77,7 +84,7 @@ function createIngredientsRepo(ingredientsData) {
 }
 
 function createRecipesRepo(recipeData) {
-  let recipesRepository = new RecipesRepository(recipeData)
+  recipesRepository = new RecipesRepository(recipeData)
   createCards(recipesRepository.recipeData)
   findTags(recipesRepository.recipeData)
   return recipeData
@@ -306,3 +313,30 @@ function getRecipeCost() {
   console.log(userChecked);
     
 }
+
+function searchSavedRecipes(event) {
+  if (event.target.className === 'search-button') {
+    let searchInputValue = domUpdates.capitalize(searchInput.value)
+    user.favoriteRecipes.map(favoriteRecipe => {
+      let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+      if (favoritedRecipe.name.includes(searchInputValue)) {
+        domUpdates.displaySearchedFavorite(favoritedRecipe)
+      }
+    })
+    // searchInputValue user.favoriteRecipes.
+    // console.log(searchInputValue)
+  }
+}
+//   function searchSavedIngredients(event) {
+//     if (event.target.className === 'search-button') {
+//       let searchInputValue = domUpdates.capitalize(searchInput.value)
+//       user.favoriteRecipes.map(favoriteRecipe => {
+//         let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+//         console.log(favoritedRecipe);
+//         if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
+//           domUpdates.displaySearchedFavorite(favoritedRecipe)
+//         }
+//       })
+// }
+//   }
+// ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())

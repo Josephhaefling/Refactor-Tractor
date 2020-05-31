@@ -187,10 +187,14 @@ const domUpdates = {
     //   console.log('ariaExpanded2', ariaExpanded)
     },
    
-    
-      // ariaExpanded.setAttribute('aria-expanded', true)
-    
-  
+  displaySearchedFavorite(favorite) {
+    this.recipeData.forEach(recipe => {
+      if (recipe !== favorite){
+        this.hideRecipes(recipe)
+      }
+    })
+    // this.showAllRecipes(favorite)
+  },
 
   hideRecipes(recipe) {
     let domRecipe = document.getElementById(`${recipe.id}`);
@@ -198,6 +202,8 @@ const domUpdates = {
   }
 
 }
+
+
 module.exports = domUpdates
 
 

@@ -199,7 +199,8 @@ main {
 .filter-btn, 
 .cook-recipe,
 .calculate-cost,
-.check-pantry {
+.check-pantry,
+.search-button {
   background-color: $secondary-green;
   border: 0;
   border-radius: 3px;
@@ -210,7 +211,14 @@ main {
   font-weight: bold;
   padding: 5px 10px 5px 10px;
 }
+.search-parent {
+  display: flex;
+}
 
+.search-input{
+  width: 120px;
+  margin-right: 10px;
+}
 .show-pantry-recipes-btn {
   margin-top: 10px;
 }
