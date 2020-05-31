@@ -154,7 +154,6 @@ const domUpdates = {
   },
 
   displayNeededIngredients(neededIngredients, userChecked, recipe) {
-    console.log(neededIngredients);
     let cookBtn = document.querySelector(".cook-recipe");
     neededIngredients.forEach(neededIngredient => {
     let thing = userChecked[neededIngredients.indexOf(neededIngredient)].quantity.amount
