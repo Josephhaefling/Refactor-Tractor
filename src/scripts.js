@@ -129,9 +129,7 @@ const generateUser = (userInfo) => {
 
 const updateUserInfo = (ingredientID, ingredientAmount) => {
   const userID = user.id;
-  const amount = parseInt(ingredientAmount)
-  console.log(ingredientID);
-  console.log(ingredientAmount);
+  const amount = parseFloat(ingredientAmount)
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
     method: 'POST',
     headers: {
@@ -358,23 +356,21 @@ const checkPantryForIngredients = (recipe) => {
 
 
 const putItemsInPantry = (recipe) => {
-  console.log('beforeAdded', user.pantry.ingredients);
     const ingredientsToAdd = updateIngredientForPost(recipe)
     let userChecked = user.checkUserPantryForIngredients(recipe);
     const pantryBefore = user.pantry.ingredients.length
     user.addItemsToPantry(userChecked)
-    updateUserInfo(ingredientsToAdd[0].id, ingredientsToAdd[0].amount)
+    ingredientsToAdd.forEach(ingredientToAdd => {
+      updateUserInfo(ingredientToAdd.id, ingredientToAdd.amount)})
     pantryBefore < user.pantry.ingredients.length ? findPantryInfo('update') : domUpdates.cookMessage(recipe)
-    console.log('beforeRemoved', user.pantry.ingredients);
 }
 
 const cookRecipe = (recipe) => {
   if (event.target.classList.value === 'cook-recipe') {
     const ingredientsToRemove = updateIngredientForPost(recipe)
     user.removeRecipeIngredients(recipe.ingredients)
-    console.log('after', user.pantry.ingredients);
     findPantryInfo('update')
-    updateUserInfo(ingredientsToRemove[0].id, `-${ingredientsToRemove[0].amount}`)
+    ingredientsToRemove.forEach(ingredientToRemove => updateUserInfo(ingredientToRemove.id, `-${ingredientToRemove.amount}`))
   }
 }
 
