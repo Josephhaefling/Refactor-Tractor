@@ -26,10 +26,13 @@ let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+let searchInput = document.querySelector(".search-input")
+let searchButton = document.querySelector(".search-button")
 let recipes = [];
 let ingredientsRepository;
 let recipesRepository;
 let user;
+let recipesRepository;
 
 
 allRecipesBtn.addEventListener("click", () => {
@@ -44,7 +47,10 @@ main.addEventListener("click", () => {
   addToMyRecipes();
   getRecipe();
 });
-
+searchButton.addEventListener('click', function() {
+  searchSavedRecipes(event)
+  searchSavedIngredients(event)
+});
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 
 savedRecipesBtn.addEventListener("click", () => {
@@ -392,3 +398,28 @@ const fixRecipeData = () => {
   })
   recipesRepository = recipesRepository.recipeData
 }
+
+function searchSavedRecipes(event) {
+  if (event.target.className === 'search-button') {
+    let searchInputValue = domUpdates.capitalize(searchInput.value)
+    user.favoriteRecipes.map(favoriteRecipe => {
+      let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+      if (favoritedRecipe.name.includes(searchInputValue)) {
+        domUpdates.displaySearchedFavorite(favoritedRecipe)
+      }
+    })
+  }
+}
+//   function searchSavedIngredients(event) {
+//     if (event.target.className === 'search-button') {
+//       let searchInputValue = domUpdates.capitalize(searchInput.value)
+//       user.favoriteRecipes.map(favoriteRecipe => {
+//         let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+//         console.log(favoritedRecipe);
+//         if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
+//           domUpdates.displaySearchedFavorite(favoritedRecipe)
+//         }
+//       })
+// }
+//   }
+// ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())
