@@ -30,7 +30,6 @@ let searchInput = document.querySelector(".search-input")
 let searchButton = document.querySelector(".search-button")
 let recipes = [];
 let ingredientsRepository;
-let recipesRepository;
 let user;
 let recipesRepository;
 
@@ -49,7 +48,7 @@ main.addEventListener("click", () => {
 });
 searchButton.addEventListener('click', function() {
   searchSavedRecipes(event)
-  searchSavedIngredients(event)
+  // searchSavedIngredients(event)
 });
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 
@@ -105,33 +104,6 @@ const generateUser = (userInfo) => {
   domUpdates.getWelcomeMessage(firstName)
   domUpdates.defineUser(user)
 }
-
-
-// const updateUserPantry = (user) => {
-//   const user.
-//   // updateUserInfo()
-//   }
-//
-//
-
-// et addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
-//   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type' : 'application/json'
-//     },
-//     body: JSON.stringify({
-//       userID: user.id,
-//       date: "2019/09/22",
-//       numSteps: stepsWalked,
-//       minutesActive: activityTime,
-//       flightsOfStairs: stairAmount
-//     })
-//   }).then(response => console.log(response.json()))
-//     .catch(err => console.error(err))
-//   domUpdates.clearDisplayActivityForm()
-//   domUpdates.clearActivityInputs()
-// }
 
 const updateUserInfo = (ingredientID, ingredientAmount) => {
   const userID = user.id;
@@ -403,13 +375,14 @@ function searchSavedRecipes(event) {
   if (event.target.className === 'search-button') {
     let searchInputValue = domUpdates.capitalize(searchInput.value)
     user.favoriteRecipes.map(favoriteRecipe => {
-      let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+      let favoritedRecipe = recipesRepository.find(recipe => recipe.id === favoriteRecipe)
       if (favoritedRecipe.name.includes(searchInputValue)) {
         domUpdates.displaySearchedFavorite(favoritedRecipe)
       }
     })
   }
 }
+
 //   function searchSavedIngredients(event) {
 //     if (event.target.className === 'search-button') {
 //       let searchInputValue = domUpdates.capitalize(searchInput.value)
