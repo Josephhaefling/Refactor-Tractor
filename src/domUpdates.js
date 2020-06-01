@@ -37,9 +37,6 @@ const domUpdates = {
         <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </article>`
     main.insertAdjacentHTML("beforeend", cardHtml);
-    console.log('recipeInfo', recipeInfo);
-    console.log('shortRecipeName', shortRecipeName);
-    
   },
 
    listTags(allTags) {
@@ -76,6 +73,7 @@ const domUpdates = {
     foundRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
+      console.log('recipe',recipe);
     });
   },
 
@@ -84,6 +82,7 @@ const domUpdates = {
       let cardId = parseInt(event.target.closest(".recipe-card").id)
         event.target.src = "../images/apple-logo.png";
       }
+      console.log('event', event);
     },
 
     emptyAppleIcon(event) {
@@ -131,7 +130,9 @@ const domUpdates = {
       let fullRecipeInfo = document.querySelector(".recipe-instructions");
       let instructionsList = "";
       let instructions = recipe.instructions.map(i => {
+        console.log('recipe', recipe);
       return i.instruction
+      
     });
     instructions.forEach(i => {
       instructionsList += `<li>${i}</li>`
@@ -166,6 +167,7 @@ const domUpdates = {
 
   getIngredientName(recipeIngredient) {
     return this.ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
+    
   },
 
   capitalize(words) {
@@ -194,6 +196,8 @@ const domUpdates = {
     this.recipeData.forEach(recipe => {
       if (recipe !== favorite){
         this.hideRecipes(recipe)
+        console.log('favorite', favorite);
+        
       }
     })
     // this.showAllRecipes(favorite)

@@ -35,7 +35,7 @@ let recipesRepository;
 
 
 allRecipesBtn.addEventListener("click", function() {
-  domUpdates.showAllRecipes(recipes)
+  domUpdates.showAllRecipes(recipes) 
 });
 filterBtn.addEventListener("click", function() {
   findCheckedBoxes(recipes)
@@ -294,7 +294,9 @@ function findRecipesWithCheckedIngredients(selected, ingredientsRepository) {
   recipes.forEach(recipe => {
     let allRecipeIngredients = [];    
     recipe.ingredients.forEach(ingredient => {  
-      let ingredientName = ingredientsRepository.getIngredientName(ingredient, 'id');      
+      let ingredientName = ingredientsRepository.getIngredientName(ingredient, 'id');
+      console.log('ingredient', ingredient);
+            
       allRecipeIngredients.push(ingredientName.name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {

@@ -122,7 +122,7 @@ describe('domUpdates', function(){
     expect(domUpdates.getWelcomeMessage).to.have.been.called.with(firstName)
   });
 
-  it.only('Should Spy on addRecipesToDom', function() {
+  it('Should Spy on addRecipesToDom', function() {
     let ingredientsData;
     let shortRecipeName = 'Loaded Chocolate Chip Pudding Cookie Cups';
     let recipeData = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
@@ -215,24 +215,112 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on listTags', function() {
+    let allTags = ["antipasti", "antipasto", "appetizer", "breakfast", "brunch", "condiment", "dinner", "dip", "hor d'oeuvre", "lunch", "main course", "main dish", "morning meal", "salad", "sauce", "side dish", "snack", "spread", "starter"]
     global.domUpdates 
     chai.spy.on(domUpdates, ['listTags'], () => {});
-    domUpdates.listTags()
+    domUpdates.listTags(allTags)
     expect(domUpdates.listTags).to.have.been.called(1);
+    expect(domUpdates.listTags).to.have.been.called.with(allTags)
   });
 
   it('Should Spy on capitalize', function() {
+    let words = 'Hello';
     global.domUpdates 
     chai.spy.on(domUpdates, ['capitalize'], () => {});
-    domUpdates.capitalize()
+    domUpdates.capitalize(words)
     expect(domUpdates.capitalize).to.have.been.called(1);
+    expect(domUpdates.capitalize).to.have.been.called.with(words);
   });
 
   it('Should Spy on showAllRecipes', function() {
+    let ingredientsData;
+    let passedRecipes = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredientsData = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['showAllRecipes'], () => {});
-    domUpdates.showAllRecipes()
+    domUpdates.showAllRecipes(passedRecipes)
     expect(domUpdates.showAllRecipes).to.have.been.called(1);
+    expect(domUpdates.showAllRecipes).to.have.been.called.with(passedRecipes);
   });
 
   it('Should Spy on showWelcomeBanner', function() {
@@ -243,10 +331,94 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on hideUnselectedRecipes', function() {
+    let ingredientsData
+    let foundRecipes = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredientsData = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['hideUnselectedRecipes'], () => {});
-    domUpdates.hideUnselectedRecipes()
+    domUpdates.hideUnselectedRecipes(foundRecipes)
     expect(domUpdates.hideUnselectedRecipes).to.have.been.called(1);
+    expect(domUpdates.hideUnselectedRecipes).to.have.been.called.with(foundRecipes);
   });
 
   it('Should Spy on fillAppleIcon', function() {
@@ -278,10 +450,94 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on generateRecipeTitle', function() {
+    let ingredients
+    let recipe = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredients = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateRecipeTitle'], () => {});
-    domUpdates.generateRecipeTitle()
+    domUpdates.generateRecipeTitle(recipe, ingredients)
     expect(domUpdates.generateRecipeTitle).to.have.been.called(1);
+    expect(domUpdates.generateRecipeTitle).to.have.been.called.with(recipe, ingredients);
   });
 
   it('Should Spy on addRecipeImage', function() {
@@ -292,17 +548,185 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on generateInstructions', function() {
+    let ingredients;
+    let recipe = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredients = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateInstructions'], () => {});
-    domUpdates.generateInstructions()
+    domUpdates.generateInstructions(recipe)
     expect(domUpdates.generateInstructions).to.have.been.called(1);
+    expect(domUpdates.generateInstructions).to.have.been.called.with(recipe);
   });
 
   it('Should Spy on generateRecipeBtns', function() {
+    let ingredients;
+    let recipe = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredients = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateRecipeBtns'], () => {});
-    domUpdates.generateRecipeBtns()
+    domUpdates.generateRecipeBtns(recipe)
     expect(domUpdates.generateRecipeBtns).to.have.been.called(1);
+    expect(domUpdates.generateRecipeBtns).to.have.been.called.with(recipe);
   });
 
   it('Should Spy on displayRecipeCost', function() {
@@ -313,17 +737,103 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on generateIngredients', function() {
+    let ingredients;
+    let recipe = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredients = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateIngredients'], () => {});
-    domUpdates.generateIngredients()
+    domUpdates.generateIngredients(recipe)
     expect(domUpdates.generateIngredients).to.have.been.called(1);
+    expect(domUpdates.generateIngredients).to.have.been.called.with(recipe);
   });
 
   it('Should Spy on getIngredientName', function() {
+    let recipeIngredient = {id: 20081, quantity: {}}
     global.domUpdates 
     chai.spy.on(domUpdates, ['getIngredientName'], () => {});
-    domUpdates.getIngredientName()
+    domUpdates.getIngredientName(recipeIngredient)
     expect(domUpdates.getIngredientName).to.have.been.called(1);
+    expect(domUpdates.getIngredientName).to.have.been.called.with(recipeIngredient);
   });
 
   it('Should Spy on showMyRecipesBanner', function() {
@@ -341,10 +851,94 @@ describe('domUpdates', function(){
   });
 
   it('Should Spy on displaySearchedFavorite', function() {
+    let ingredients;
+    let favorite = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredients = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['displaySearchedFavorite'], () => {});
-    domUpdates.displaySearchedFavorite()
+    domUpdates.displaySearchedFavorite(favorite)
     expect(domUpdates.displaySearchedFavorite).to.have.been.called(1);
+    expect(domUpdates.displaySearchedFavorite).to.have.been.called.with(favorite);
   });
 
   it('Should Spy on hideRecipes', function() {
