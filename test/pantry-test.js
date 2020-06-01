@@ -56,7 +56,7 @@ describe('Pantry', function () {
             "name": "rat poison",
             "id": 4,
             "quantity": {
-              "amount": 1,
+              "amount": 0.5,
               "unit": "large"
             }
           }
@@ -142,18 +142,19 @@ describe('Pantry', function () {
     expect(pantry.ingredients).to.deep.equal(samplePantryInfo);
   });
   it('should be able to check pantry ingredients', function () {
-    expect(pantry.checkPantryForIngredients(recipe.ingredients)).to.deep.equal([{
-      "id": 4,
-      "name": "rat poison",
-      "quantity": {
-        "amount": 1,
-        "unit": "large"
-      }
-    }]);
+    expect(pantry.checkPantryForIngredients(recipe.ingredients[0])).to.deep.equal(false);
   });
   it('should be able to check pantry ingredients', function () {
-    expect(pantry.checkPantryForIngredients(recipe1.ingredients)).to.equal(true);
+    expect(pantry.checkPantryForIngredients(recipe.ingredients[3])).to.deep.equal({
+      "name": "rat poison",
+      "id": 4,
+      "quantity": {
+        "amount": 0.5,
+        "unit": "large"
+      }
+    });
   });
+
   it('should be able to check the ingredient amount', function () {
     expect(pantry.checkIngredientAmount(recipe.ingredients)).to.deep.equal([{
       "id": 1,
@@ -164,7 +165,41 @@ describe('Pantry', function () {
       }
     }]);
   });
+
   it('should be able to check the ingredient amount', function () {
-    expect(pantry.checkIngredientAmount(recipe1.ingredients)).to.equal(true);
+    expect(pantry.checkIngredientAmount(recipe1.ingredients)).to.equal(false);
+  });
+
+  it('should be able to add an item from the pantry', function() {
+    expect(pantry.addItem(recipe.ingredients[1])).to.deep.equal([
+  { ingredient: 1, amount: 1 },
+  { ingredient: 2, amount: 1.5 },
+  { ingredient: 3, amount: 1 }
+  ])
+  })
+
+  it('should be able to add an item from the pantry', function() {
+    expect(pantry.addItem(recipe.ingredients[3])).to.deep.equal([
+  { ingredient: 1, amount: 1 },
+  { ingredient: 2, amount: 1 },
+  { ingredient: 3, amount: 1 },
+  { ingredient: 4, amount: 0.5}
+])
+  })
+
+  it('should be able to remove an item from the pantry', function() {
+    let ingredientToRemove = {
+      "name": "baking soda",
+      "id": 2,
+      "quantity": {
+        "amount": 0.5,
+        "unit": "tsp"
+      }
+    }
+    expect(pantry.removeItem(ingredientToRemove)).to.deep.equal([
+  { ingredient: 1, amount: 1 },
+  { ingredient: 2, amount: 0.5 },
+  { ingredient: 3, amount: 1 }
+])
   });
 });

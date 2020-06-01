@@ -6,6 +6,8 @@ class User {
     this.favoriteRecipes = [];
     this.recipesToCook = [];
     this.viewingFavorites = false;
+    //erase me later
+    this.user = user
   }
 
   saveRecipe(recipe) {
@@ -27,21 +29,32 @@ class User {
 
   checkUserPantryForIngredients(recipeToCook) {
     const recipeIngredients = recipeToCook.ingredients
-    const missingIngredients = this.pantry.checkPantryForIngredients(recipeIngredients);
+    const haveIngredients = recipeIngredients.map(recipeIngredient => this.pantry.checkPantryForIngredients(recipeIngredient))
+    const missingIngredients = haveIngredients.filter(ingredient => ingredient)
     const shortOnIngredients = this.pantry.checkIngredientAmount(recipeIngredients);
-    return missingIngredients.length > 0  || shortOnIngredients.length > 0 ? missingIngredients.concat(shortOnIngredients) : true
+    if(missingIngredients.length === 0 && shortOnIngredients.length > 0) {
+      return shortOnIngredients
+    } else if(missingIngredients.length > 0 && !shortOnIngredients) {
+      return missingIngredients
+    } else if (missingIngredients.length > 0 && shortOnIngredients.length > 0) {
+      return missingIngredients.concat(shortOnIngredients)
+    } else {
+      return true
+    }
   }
 
   addItemsToPantry(ingredientsToAdd) {
-  ingredientsToAdd.forEach(ingredient => {
-    let t = this.pantry.ingredients.find(pantryIngredient => pantryIngredient.ingredient === ingredient.id)
-    if(!t) {
-      this.pantry.ingredients.push({ingredient: ingredient.id, amount: ingredient.quantity.amount})
-    } else {
-      const indexOfT = this.pantry.ingredients.indexOf(t)
-      this.pantry.ingredients[indexOfT].amount += ingredient.quantity.amount
-      }
+    ingredientsToAdd.forEach(ingredientToAdd => {
+      let pantryItem  = this.pantry.addItem(ingredientToAdd)
     })
+    return this.pantry.ingredients
+}
+
+  removeRecipeIngredients(recipeIngredients) {
+    recipeIngredients.forEach(ingredient => {
+      this.pantry.ingredients = this.pantry.removeItem(ingredient)
+    })
+    return this.pantry.ingredients
   }
 }
 

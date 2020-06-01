@@ -4,11 +4,11 @@ class IngredientsRepository {
   }
   //needs test
   getIngredientName(ingredient, key) {
-
     return this.ingredientsData.find(fullIngredient => fullIngredient.id === ingredient[key])
   }
 
   getIngredientsCost(ingredientsList) {
+    console.log('passed', ingredientsList);
     return ingredientsList.reduce((acc, ingredient) => {
       const matchedIngredient = this.ingredientsData.find(ingredientData => ingredientData.id === ingredient.id)
       acc += matchedIngredient.estimatedCostInCents * ingredient.quantity.amount
