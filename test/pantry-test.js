@@ -56,7 +56,7 @@ describe('Pantry', function () {
             "name": "rat poison",
             "id": 4,
             "quantity": {
-              "amount": 1,
+              "amount": 0.5,
               "unit": "large"
             }
           }
@@ -149,7 +149,7 @@ describe('Pantry', function () {
       "name": "rat poison",
       "id": 4,
       "quantity": {
-        "amount": 1,
+        "amount": 0.5,
         "unit": "large"
       }
     });
@@ -183,7 +183,7 @@ describe('Pantry', function () {
   { ingredient: 1, amount: 1 },
   { ingredient: 2, amount: 1 },
   { ingredient: 3, amount: 1 },
-  { ingredient: 4, amount: 1}
+  { ingredient: 4, amount: 0.5}
 ])
   })
 

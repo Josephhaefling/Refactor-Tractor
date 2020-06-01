@@ -32,25 +32,26 @@ let recipesRepository;
 let user;
 
 
-allRecipesBtn.addEventListener("click", function() {
+allRecipesBtn.addEventListener("click", () => {
   domUpdates.showAllRecipes(recipes)
 });
-filterBtn.addEventListener("click", function() {
+
+filterBtn.addEventListener("click", () => {
   findCheckedBoxes(recipes)
 });
-main.addEventListener("click", function() {
+
+main.addEventListener("click", () => {
   addToMyRecipes();
   getRecipe();
-
-  // domUpdates.displayRecipeCost();
-  // getRecipeCost();
-  // checkPantryForIngredients();
-  // putItemsInPantry();
-  // cookRecipe();
 });
+
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
-showPantryRecipes.addEventListener("click", function() {
+
+savedRecipesBtn.addEventListener("click", () => {
+    showSavedRecipes()
+});
+
+showPantryRecipes.addEventListener("click", () => {
   findCheckedPantryBoxes(ingredientsRepository);
 });
 
@@ -71,19 +72,19 @@ const createDataSets = (wcUsersData, ingredientsData, recipeData) => {
   fixRecipeData()
 }
 
-function createUserRepo(wcUsersData) {
+const createUserRepo = (wcUsersData) => {
   let randomNum = Math.floor(Math.random() * wcUsersData.length)
   let userRepository = new UserRepository(wcUsersData)
   generateUser(userRepository.userData[randomNum])
 }
 
-function createIngredientsRepo(ingredientsData) {
+const createIngredientsRepo = (ingredientsData) =>  {
   ingredientsRepository = new IngredientsRepository(ingredientsData)
   findPantryInfo('update')
   return ingredientsData
 }
 
-function createRecipesRepo(recipeData) {
+const createRecipesRepo = (recipeData) => {
   recipesRepository = new RecipesRepository(recipeData)
   createCards(recipesRepository.recipeData)
   findTags(recipesRepository.recipeData)
@@ -91,7 +92,7 @@ function createRecipesRepo(recipeData) {
 }
 
 // GENERATE A USER ON LOAD
-function generateUser(userInfo) {
+const generateUser = (userInfo) => {
   const pantry = new Pantry(userInfo.pantry)
   user = new User(userInfo, pantry);
   const firstName = user.name.split(" ")[0];
@@ -106,22 +107,47 @@ function generateUser(userInfo) {
 //   }
 //
 //
-// const updateUserInfo = (userID, updatedIngredient) => {
-//   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+
+// et addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
+//   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
 //     method: 'POST',
 //     headers: {
-//       'Content-Type' : 'application/JSON'
+//       'Content-Type' : 'application/json'
 //     },
 //     body: JSON.stringify({
-//       "userId": userID,
-//       "ingredientID": 123,
-//       "ingredientModification": 3
+//       userID: user.id,
+//       date: "2019/09/22",
+//       numSteps: stepsWalked,
+//       minutesActive: activityTime,
+//       flightsOfStairs: stairAmount
 //     })
-//   })
+//   }).then(response => console.log(response.json()))
+//     .catch(err => console.error(err))
+//   domUpdates.clearDisplayActivityForm()
+//   domUpdates.clearActivityInputs()
 // }
 
+const updateUserInfo = (ingredientID, ingredientAmount) => {
+  const userID = user.id;
+  const amount = parseInt(ingredientAmount)
+  console.log(ingredientID);
+  console.log(ingredientAmount);
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+    body: JSON.stringify({
+      "userID": userID,
+      "ingredientID": ingredientID,
+      "ingredientModification": amount
+    })
+  }).then(response => console.log(response.json()))
+  .catch(err => console.error(err.message))
+}
+
 // CREATE RECIPE CARDS
-function createCards(recipeData) {
+const createCards = (recipeData) => {
   recipeData.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
@@ -134,7 +160,7 @@ function createCards(recipeData) {
 }
 
 // FILTER BY RECIPE TAGS
-function findTags(recipeData) {
+const findTags = (recipeData) => {
   let tags = [];
   recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -147,7 +173,7 @@ function findTags(recipeData) {
   domUpdates.listTags(tags);
 }
 
-function findCheckedBoxes() {
+const findCheckedBoxes = () => {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
   let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = checkboxInfo.filter(box => {
@@ -158,11 +184,10 @@ function findCheckedBoxes() {
 
 //Do we need to use the method in the user?
 //Figure out how to filter only favorites by type when on favorites section
-function findTaggedRecipes(selected, recipeList) {
+const findTaggedRecipes = (selected, recipeList) => {
   recipeList = user.viewingFavorites ? user.favoriteRecipes : recipes;
   let filteredResults = [];
   selected.forEach(tag => {
-    console.log(recipeList);
 
     let allRecipes = recipes.filter(recipe => {
       return recipe.tags.includes(tag.id);
@@ -179,14 +204,14 @@ function findTaggedRecipes(selected, recipeList) {
   }
 }
 
-function filterRecipes(filtered) {
+const filterRecipes = (filtered) => {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
   domUpdates.hideUnselectedRecipes(foundRecipes)
 }
 
-function addToMyRecipes() {
+const addToMyRecipes = () => {
  if (event.target.className === "card-apple-icon") {
    let cardId = parseInt(event.target.closest(".recipe-card").id)
    if (!user.favoriteRecipes.includes(cardId)) {
@@ -204,7 +229,7 @@ function addToMyRecipes() {
 }
 
 
-function isDescendant(parent, child) {
+const isDescendant = (parent, child) => {
   let node = child;
   while (node !== null) {
     if (node === parent) {
@@ -215,8 +240,7 @@ function isDescendant(parent, child) {
   return false;
 }
 
-function showSavedRecipes() {
-  console.log(recipesRepository);
+const showSavedRecipes = () => {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });
@@ -242,7 +266,7 @@ function showSavedRecipes() {
 
 
 
-// function filterNonSearched(filtered) {
+// const filterNonSearched(filtered) {
 //   let found = recipes.filter(recipe => {
 //     let ids = filtered.map(f => f.id);
 //     return !ids.includes(recipe.id)
@@ -256,7 +280,7 @@ function showSavedRecipes() {
 
 
 // CREATE AND USE PANTRY
-function findPantryInfo(update) {
+const findPantryInfo = (update) => {
   const fullPantryIngredients = []
   const pantryIngredients = user.pantry.ingredients
   pantryIngredients.forEach(pantryIngredient => {
@@ -267,7 +291,7 @@ function findPantryInfo(update) {
 }
 
 //Probably needs to go into DOM updates
-function displayPantryInfo(pantry, amountsPantry) {
+const displayPantryInfo = (pantry, amountsPantry) => {
   pantry.forEach(ingredient => {
     let amountOfIngredient = amountsPantry.find(userIngredient => userIngredient.ingredient === ingredient.id)
     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
@@ -277,7 +301,7 @@ function displayPantryInfo(pantry, amountsPantry) {
   });
 }
 
-function findCheckedPantryBoxes(ingredientsRepository) {
+const findCheckedPantryBoxes = (ingredientsRepository) => {
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
   let pantryCheckboxInfo = Array.from(pantryCheckboxes)
   let selectedIngredients = pantryCheckboxInfo.filter(box => {
@@ -289,7 +313,7 @@ function findCheckedPantryBoxes(ingredientsRepository) {
   }
 }
 
-function findRecipesWithCheckedIngredients(selected, ingredientsRepository) {
+const findRecipesWithCheckedIngredients = (selected, ingredientsRepository) => {
   let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
   let ingredientNames = selected.map(item => {
     return item.id;
@@ -320,7 +344,7 @@ const getRecipe = () => {
   }
 }
 
-function getRecipeCost(recipe) {
+const getRecipeCost = (recipe) => {
   let userChecked = user.checkUserPantryForIngredients(recipe);
   let costOfRecipe = Math.round(ingredientsRepository.getIngredientsCost(userChecked)) / 100
   domUpdates.displayRecipeCost(costOfRecipe)
@@ -334,17 +358,33 @@ const checkPantryForIngredients = (recipe) => {
 
 
 const putItemsInPantry = (recipe) => {
+  console.log('beforeAdded', user.pantry.ingredients);
+    const ingredientsToAdd = updateIngredientForPost(recipe)
     let userChecked = user.checkUserPantryForIngredients(recipe);
     const pantryBefore = user.pantry.ingredients.length
     user.addItemsToPantry(userChecked)
+    updateUserInfo(ingredientsToAdd[0].id, ingredientsToAdd[0].amount)
     pantryBefore < user.pantry.ingredients.length ? findPantryInfo('update') : domUpdates.cookMessage(recipe)
+    console.log('beforeRemoved', user.pantry.ingredients);
 }
 
 const cookRecipe = (recipe) => {
   if (event.target.classList.value === 'cook-recipe') {
+    const ingredientsToRemove = updateIngredientForPost(recipe)
     user.removeRecipeIngredients(recipe.ingredients)
+    console.log('after', user.pantry.ingredients);
     findPantryInfo('update')
+    updateUserInfo(ingredientsToRemove[0].id, `-${ingredientsToRemove[0].amount}`)
   }
+}
+
+const updateIngredientForPost = (recipe) => {
+  return recipe.ingredients.map(ingredientToRemove => {
+    let newIngredient = {id: null, amount: 0}
+    newIngredient.id = ingredientToRemove.id
+    newIngredient.amount = ingredientToRemove.quantity.amount
+    return newIngredient
+  })
 }
 
 const fixRecipeData = () => {

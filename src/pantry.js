@@ -30,7 +30,7 @@ class Pantry {
     const itemIndex = this.ingredients.indexOf(foundItem)
     this.ingredients[itemIndex].amount += itemToAdd.quantity.amount
   } else {
-    this.ingredients.push({ingredient: parseInt(`${itemToAdd.id}`), amount: parseInt(`${itemToAdd.quantity.amount}`)})
+    this.ingredients.push({ingredient: parseInt(`${itemToAdd.id}`), amount: parseFloat(`${itemToAdd.quantity.amount}`)})
   }
     return this.ingredients
   }
