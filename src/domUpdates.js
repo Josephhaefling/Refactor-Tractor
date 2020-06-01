@@ -7,7 +7,6 @@ const domUpdates = {
   defineData(recipeData, ingredientsData) {
     this.recipeData = recipeData
     this.ingredientsData = ingredientsData
-    console.log(recipeData)
   },
 
   defineUser(user) {
