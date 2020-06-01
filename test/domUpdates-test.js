@@ -9,168 +9,345 @@ describe('domUpdates', function(){
     chai.spy.restore(domUpdates)
   });
 
-  it.only('Should Spy on defineData', function() {
+  it('Should Spy on defineData', function() {
+    let ingredientsData;
+    let recipeData = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredientsData = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
+
     global.domUpdates 
     chai.spy.on(domUpdates, ['defineData'], () => {});
-    domUpdates.defineData()
+    domUpdates.defineData(recipeData, ingredientsData)
     expect(domUpdates.defineData).to.have.been.called(1);
+    expect(domUpdates.defineData).to.have.been.called.with(recipeData, ingredientsData)
   });
 
-  it.only('Should Spy on defineUser', function() {
+  it('Should Spy on defineUser', function() {
+    let user = {
+      "id": 1,
+      "name": "Saige O'Kon"
+    }
     global.domUpdates 
     chai.spy.on(domUpdates, ['defineUser'], () => {});
-    domUpdates.defineUser()
+    domUpdates.defineUser(user)
     expect(domUpdates.defineUser).to.have.been.called(1);
+    expect(domUpdates.defineUser).to.have.been.called.with(user)
   });
 
-  it.only('Should Spy on getWelcomeMessage', function() {
+  it('Should Spy on getWelcomeMessage', function() {
+    let firstName = 'Jaydon';
     global.domUpdates 
     chai.spy.on(domUpdates, ['getWelcomeMessage'], () => {});
-    domUpdates.getWelcomeMessage()
+    domUpdates.getWelcomeMessage(firstName)
     expect(domUpdates.getWelcomeMessage).to.have.been.called(1);
+    expect(domUpdates.getWelcomeMessage).to.have.been.called.with(firstName)
   });
 
   it.only('Should Spy on addRecipesToDom', function() {
+    let ingredientsData;
+    let shortRecipeName = 'Loaded Chocolate Chip Pudding Cookie Cups';
+    let recipeData = { "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+    "id": 595736,
+    "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+    "ingredients": [
+      {
+        "name": "all purpose flour",
+        "id": 1,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      },
+      {
+        "name": "baking soda",
+        "id": 2,
+        "quantity": {
+          "amount": 0.5,
+          "unit": "tsp"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 3,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      },
+      {
+        "name": "egg",
+        "id": 4,
+        "quantity": {
+          "amount": 1,
+          "unit": "large"
+        }
+      }
+    ],
+    "instructions": [
+      {
+        "number": 1,
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy."
+      },
+      {
+        "number": 2,
+        "instruction": "Add egg and vanilla and mix until combined."
+      },
+      {
+        "number": 3,
+        "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees."
+      }
+    ],
+    "tags": [
+      "antipasti",
+      "starter",
+      "snack",
+      "appetizer",
+      "antipasto",
+      "hor d'oeuvre"
+    ]
+  }
+  ingredientsData = [
+    {
+      "id": 1,
+      "name": "wheat flour",
+      "estimatedCostInCents": 142
+    },
+    {
+      "id": 2,
+      "name": "bicarbonate of soda",
+      "estimatedCostInCents": 582
+    },
+    {
+      "id": 3,
+      "name": "eggs",
+      "estimatedCostInCents": 472
+    },
+    {
+      "id": 4,
+      "name": "rat poison",
+      "estimatedCostInCents": 902
+    },
+  ],
     global.domUpdates 
     chai.spy.on(domUpdates, ['addRecipesToDom'], () => {});
-    domUpdates.addRecipesToDom()
+    domUpdates.addRecipesToDom(recipeData, shortRecipeName)
     expect(domUpdates.addRecipesToDom).to.have.been.called(1);
+    expect(domUpdates.addRecipesToDom).to.have.been.called.with(recipeData, shortRecipeName)
   });
 
-  it.only('Should Spy on listTags', function() {
+  it('Should Spy on listTags', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['listTags'], () => {});
     domUpdates.listTags()
     expect(domUpdates.listTags).to.have.been.called(1);
   });
 
-  it.only('Should Spy on capitalize', function() {
+  it('Should Spy on capitalize', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['capitalize'], () => {});
     domUpdates.capitalize()
     expect(domUpdates.capitalize).to.have.been.called(1);
   });
 
-  it.only('Should Spy on showAllRecipes', function() {
+  it('Should Spy on showAllRecipes', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['showAllRecipes'], () => {});
     domUpdates.showAllRecipes()
     expect(domUpdates.showAllRecipes).to.have.been.called(1);
   });
 
-  it.only('Should Spy on showWelcomeBanner', function() {
+  it('Should Spy on showWelcomeBanner', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['showWelcomeBanner'], () => {});
     domUpdates.showWelcomeBanner()
     expect(domUpdates.showWelcomeBanner).to.have.been.called(1);
   });
 
-  it.only('Should Spy on hideUnselectedRecipes', function() {
+  it('Should Spy on hideUnselectedRecipes', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['hideUnselectedRecipes'], () => {});
     domUpdates.hideUnselectedRecipes()
     expect(domUpdates.hideUnselectedRecipes).to.have.been.called(1);
   });
 
-  it.only('Should Spy on fillAppleIcon', function() {
+  it('Should Spy on fillAppleIcon', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['fillAppleIcon'], () => {});
     domUpdates.fillAppleIcon()
     expect(domUpdates.fillAppleIcon).to.have.been.called(1);
   });
 
-  it.only('Should Spy on emptyAppleIcon', function() {
+  it('Should Spy on emptyAppleIcon', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['emptyAppleIcon'], () => {});
     domUpdates.emptyAppleIcon()
     expect(domUpdates.emptyAppleIcon).to.have.been.called(1);
   });
 
-  it.only('Should Spy on exitRecipe', function() {
+  it('Should Spy on exitRecipe', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['exitRecipe'], () => {});
     domUpdates.exitRecipe()
     expect(domUpdates.exitRecipe).to.have.been.called(1);
   });
 
-  it.only('Should Spy on openRecipeInfo', function() {
+  it('Should Spy on openRecipeInfo', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['openRecipeInfo'], () => {});
     domUpdates.openRecipeInfo()
     expect(domUpdates.openRecipeInfo).to.have.been.called(1);
   });
 
-  it.only('Should Spy on generateRecipeTitle', function() {
+  it('Should Spy on generateRecipeTitle', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateRecipeTitle'], () => {});
     domUpdates.generateRecipeTitle()
     expect(domUpdates.generateRecipeTitle).to.have.been.called(1);
   });
 
-  it.only('Should Spy on addRecipeImage', function() {
+  it('Should Spy on addRecipeImage', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['addRecipeImage'], () => {});
     domUpdates.addRecipeImage()
     expect(domUpdates.addRecipeImage).to.have.been.called(1);
   });
 
-  it.only('Should Spy on generateInstructions', function() {
+  it('Should Spy on generateInstructions', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateInstructions'], () => {});
     domUpdates.generateInstructions()
     expect(domUpdates.generateInstructions).to.have.been.called(1);
   });
 
-  it.only('Should Spy on generateRecipeBtns', function() {
+  it('Should Spy on generateRecipeBtns', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateRecipeBtns'], () => {});
     domUpdates.generateRecipeBtns()
     expect(domUpdates.generateRecipeBtns).to.have.been.called(1);
   });
 
-  it.only('Should Spy on displayRecipeCost', function() {
+  it('Should Spy on displayRecipeCost', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['displayRecipeCost'], () => {});
     domUpdates.displayRecipeCost()
     expect(domUpdates.displayRecipeCost).to.have.been.called(1);
   });
 
-  it.only('Should Spy on generateIngredients', function() {
+  it('Should Spy on generateIngredients', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['generateIngredients'], () => {});
     domUpdates.generateIngredients()
     expect(domUpdates.generateIngredients).to.have.been.called(1);
   });
 
-  it.only('Should Spy on getIngredientName', function() {
+  it('Should Spy on getIngredientName', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['getIngredientName'], () => {});
     domUpdates.getIngredientName()
     expect(domUpdates.getIngredientName).to.have.been.called(1);
   });
 
-  it.only('Should Spy on showMyRecipesBanner', function() {
+  it('Should Spy on showMyRecipesBanner', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['showMyRecipesBanner'], () => {});
     domUpdates.showMyRecipesBanner()
     expect(domUpdates.showMyRecipesBanner).to.have.been.called(1);
   });
 
-  it.only('Should Spy on toggleMenu', function() {
+  it('Should Spy on toggleMenu', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['toggleMenu'], () => {});
     domUpdates.toggleMenu()
     expect(domUpdates.toggleMenu).to.have.been.called(1);
   });
 
-  it.only('Should Spy on displaySearchedFavorite', function() {
+  it('Should Spy on displaySearchedFavorite', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['displaySearchedFavorite'], () => {});
     domUpdates.displaySearchedFavorite()
     expect(domUpdates.displaySearchedFavorite).to.have.been.called(1);
   });
 
-  it.only('Should Spy on hideRecipes', function() {
+  it('Should Spy on hideRecipes', function() {
     global.domUpdates 
     chai.spy.on(domUpdates, ['hideRecipes'], () => {});
     domUpdates.hideRecipes()

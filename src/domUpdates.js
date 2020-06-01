@@ -19,7 +19,7 @@ const domUpdates = {
         <h1>Welcome ${firstName}!</h1>
       </section>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-      welcomeMsg);
+      welcomeMsg); 
   },
 
   addRecipesToDom(recipeInfo, shortRecipeName) {
@@ -37,6 +37,9 @@ const domUpdates = {
         <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </article>`
     main.insertAdjacentHTML("beforeend", cardHtml);
+    console.log('recipeInfo', recipeInfo);
+    console.log('shortRecipeName', shortRecipeName);
+    
   },
 
    listTags(allTags) {
