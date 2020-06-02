@@ -23,10 +23,6 @@ This is the group project from the Turing School of Software and Design's Mod 2.
 - Horacio Borrego: https://github.com/H-Bo214
 - Liliana Weimer: https://github.com/lilianaweimer
 
-## In Action
-
-# screenshots here, tomorrow!!
-
 ## Technologies Used
 
 - HTML
@@ -35,3 +31,21 @@ This is the group project from the Turing School of Software and Design's Mod 2.
 - Git/GitHub
 - Webpack
 - Fetch API
+
+## In Action
+
+<img src="src/images/wc-viewrecipe.gif" height="auto" width = "75%">
+
+Viewing a recipe
+
+<img src="src/images/wc-favorites.gif" height="auto" width = "75%">
+
+Favoriting a recipe
+
+<img src="src/images/wc-pantry.gif" height="auto" width = "75%">
+
+Accessing the pantry
+
+<img src="src/images/wc-filter.gif" height="auto" width = "75%">
+
+Filtering recipes by type
