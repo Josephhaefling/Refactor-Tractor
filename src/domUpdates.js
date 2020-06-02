@@ -25,17 +25,17 @@ const domUpdates = {
   addRecipesToDom(recipeInfo, shortRecipeName) {
     let main = document.querySelector("main")
     let cardHtml = `
-      <article class="recipe-card" id=${recipeInfo.id}>
+      <button class="recipe-card" id=${recipeInfo.id}>
         <h3 maxlength="40">${shortRecipeName}</h3>
         <article class="card-photo-container">
-          <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
+          <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe" aria-role="button">
           <article class="text">
             <article>Click for Instructions</article>
           </article>
         </article>
         <h4>${recipeInfo.tags[0]}</h4>
-        <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-      </article>`
+        <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon" aria-role="button">
+      </button>`
     main.insertAdjacentHTML("beforeend", cardHtml);
   },
 
@@ -141,7 +141,7 @@ const domUpdates = {
   generateRecipeBtns(recipe) {
     let fullRecipeInfo = document.querySelector(".recipe-instructions");
     let recipeButtons = `
-    <button class="cook-recipe" id="${recipe.id}">Cook This Recipe</button>
+    <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
     <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
     <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
     `;
@@ -163,6 +163,17 @@ const domUpdates = {
       cookBtn.insertAdjacentHTML("beforebegin", `<p class="needed-ingredients">${neededIngredient.name}: ${thing}</p>`);
     })
     fullRecipeInfo.insertAdjacentHTML("beforeend", `<button class="add-ingredients-btn" id=" ${recipe.id}">Add to Pantry</button>`);
+  },
+
+  disableButton(eventValue) {
+    if(eventValue === 'add-ingredients-btn') {
+      let cookRecipe = document.querySelector('.cook-recipe');
+      cookRecipe.removeAttribute('disabled')
+      cookRecipe.style.backgroundColor = '#3c6666'
+    }
+    let buttonToDisable = document.querySelector(`.${eventValue}`);
+    buttonToDisable.style.backgroundColor = '#84C8A4'
+    buttonToDisable.setAttribute('disabled', 'disabled')
   },
 
    generateIngredients(recipe) {
