@@ -48,12 +48,12 @@ main.addEventListener("click", () => {
 });
 searchButton.addEventListener('click', function() {
   searchSavedRecipes(event)
-  // searchSavedIngredients(event)
+  searchSavedByIngredients(event)
 });
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 
 savedRecipesBtn.addEventListener("click", () => {
-    showSavedRecipes()
+  showSavedRecipes()
 });
 
 showPantryRecipes.addEventListener("click", () => {
@@ -203,7 +203,6 @@ const addToMyRecipes = () => {
    domUpdates.openRecipeInfo(event);
  }
 }
-
 
 const isDescendant = (parent, child) => {
   let node = child;
@@ -383,16 +382,20 @@ function searchSavedRecipes(event) {
   }
 }
 
-//   function searchSavedIngredients(event) {
-//     if (event.target.className === 'search-button') {
-//       let searchInputValue = domUpdates.capitalize(searchInput.value)
-//       user.favoriteRecipes.map(favoriteRecipe => {
-//         let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
-//         console.log(favoritedRecipe);
-//         if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
-//           domUpdates.displaySearchedFavorite(favoritedRecipe)
-//         }
-//       })
-// }
-//   }
-// ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())
+function searchSavedByIngredients(event) {
+  if (event.target.className === 'search-button') {
+    let searchInputValue = searchInput.value.toLowerCase()
+    let searchedRecipe = user.favoriteRecipes.map(favoriteRecipe => {
+      let favoritedRecipe = recipesRepository.find(recipe => recipe.id === favoriteRecipe )
+      let matchedFavorites = favoritedRecipe.ingredients.reduce((acc, ingredient) => {
+        if (ingredient.name.includes(searchInputValue)) {
+          acc.push(favoritedRecipe)
+        }
+        return acc
+      }, [])
+      return matchedFavorites
+    })
+    let filtered = searchedRecipe.filter(recipe => recipe[0]).flat()
+    domUpdates.displaySearchedByIngredient(filtered)
+  }
+  }

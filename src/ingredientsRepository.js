@@ -8,7 +8,6 @@ class IngredientsRepository {
   }
 
   getIngredientsCost(ingredientsList) {
-    console.log('passed', ingredientsList);
     return ingredientsList.reduce((acc, ingredient) => {
       const matchedIngredient = this.ingredientsData.find(ingredientData => ingredientData.id === ingredient.id)
       acc += matchedIngredient.estimatedCostInCents * ingredient.quantity.amount
