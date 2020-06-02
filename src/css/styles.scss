@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'header';
 @import 'nav';
+@import 'mixins';
 
 html {
   max-width: 100%;
@@ -24,33 +25,29 @@ body {
 }
 
 h1 {
+  @include headers(#fff, 0%)
   align-self: center;
-  color: white;
   font-family: $h1-font;
   font-size: 50px;
-  margin: 0%;
   padding: 0.5% 0.7% 0%;
   width: 70%;
 }
 
 h2 {
-  color:$secondary-green;
-  margin: 10px 0px 10px 0px;
+  @include headers($secondary-green, 10px 0px 10px 0px)
 }
 
 h3 {
-  color: $secondary-green;
+  @include headers($secondary-green, 5px 5px 10px 0px)
   cursor: pointer;
   height: 17%;
-  margin: 5px 5px 10px 0px;
   transition: .8s ease;
 }
 
 h4 {
-  color: $secondary-green;
+  @include headers($secondary-green, 10px 0px 0px 0px)
   border: 1px solid $primary-green;
   border-radius: 3px;
-  margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
   width: max-content;
 }
@@ -130,7 +127,7 @@ main {
   border: 2px solid $primary-green;
   border-radius: 7px;
   cursor: pointer;
-  height: 270px;
+  height: 295px;
   margin: 20px;
   padding: 15px;
   width: 250px;
@@ -200,6 +197,7 @@ main {
 .cook-recipe,
 .calculate-cost,
 .check-pantry,
+.add-ingredients-btn,
 .search-button {
   background-color: $secondary-green;
   border: 0;
@@ -210,6 +208,10 @@ main {
   font-size: 12pt;
   font-weight: bold;
   padding: 5px 10px 5px 10px;
+}
+
+.cook-recipe {
+  background-color: #84C8A4;
 }
 .search-parent {
   display: flex;

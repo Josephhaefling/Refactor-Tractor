@@ -9,25 +9,24 @@
   font-weight: 700;
   justify-content: center;
   margin: 0%;
-  outline: none;
+  // outline: none;
   overflow: hidden;
   text-align: center;
   transition: .4s ease;
   width: 15%;
+  &:hover {
+      color: $primary-green;
+      font-size: 14px;
+      text-shadow: 0px 2px 4px black;
+      transition: .4s ease;
+  }
+ img {
+    max-height: 40px;
+    max-width: 40px;
+    padding: 2px 0px;
+  }
 }
 
-.nav-btn:hover {
-    color: $primary-green;
-    font-size: 14px;
-    text-shadow: 0px 2px 4px black;
-    transition: .4s ease;
-}
-
-.nav-btn img {
-  max-height: 40px;
-  max-width: 40px;
-  padding: 2px 0px;
-}
 
 .ing-pan-btn {
   margin: 1% 0%;

@@ -311,12 +311,16 @@ const getRecipe = () => {
   let recipe = recipes.find(recipe => recipe.id === Number(recipeId));
   if (event.target.classList.value === 'calculate-cost') {
     getRecipeCost(recipe)
+    domUpdates.disableButton(event.target.classList.value)
   } else if(event.target.classList.value === 'check-pantry') {
     checkPantryForIngredients(recipe)
+    domUpdates.disableButton(event.target.classList.value)
   } else if(event.target.classList.value === 'add-ingredients-btn') {
     putItemsInPantry(recipe)
+    domUpdates.disableButton(event.target.classList.value)
   } else if(event.target.classList.value === 'cook-recipe') {
     cookRecipe(recipe)
+    domUpdates.disableButton(event.target.classList.value)
   }
 }
 
