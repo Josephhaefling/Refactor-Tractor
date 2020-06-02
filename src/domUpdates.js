@@ -207,13 +207,22 @@ const domUpdates = {
 
   displaySearchedFavorite(favorite) {
     this.recipeData.forEach(recipe => {
-      if (recipe !== favorite){
+      if (recipe.id !== favorite.id){
         this.hideRecipes(recipe)
-
-      }
+      } 
     })
   },
 
+  displaySearchedByIngredient(favorites) {
+    let nonFilteredRecipes = this.recipeData.reduce((acc, recipeData) => {
+     if (!favorites.includes(recipeData)) {
+       acc.push(recipeData)
+     }
+    return acc
+    }, [])
+    nonFilteredRecipes.forEach(recipe => this.hideRecipes(recipe))
+  },
+  
   hideRecipes(recipe) {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
@@ -238,16 +247,3 @@ const domUpdates = {
 
 
 module.exports = domUpdates
-
-
-// let button = document.getElementById("menu-button");
-
-// button.addEventListener("click", function() {
-//   let attr = button.getAttribute("aria-expanded");
-
-//   if (attr === 'true') {
-//      button.setAttribute("aria-expanded", false);
-//   } else {
-//      button.setAttribute("aria-expanded", true);
-//   }
-// });
