@@ -1,7 +1,5 @@
 # Refactor Tractor: What's Cookin'
 
-# Leaving the boilerplate in temporarily, we need to remove it before we turn the project in.
-
 ## Abstract
 This is the group project from the Turing School of Software and Design's Mod 2. For this project, we were given a repository with a preexisting codebase for another project, which we were to build on and refactor. The learning goals for the project were as follows:
 - Build on top of pre-existing code that you did not write and navigate someone else’s codebase
