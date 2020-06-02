@@ -333,7 +333,12 @@ const getRecipeCost = (recipe) => {
 const checkPantryForIngredients = (recipe) => {
   let userChecked = user.checkUserPantryForIngredients(recipe);
   let ingredientsWithNames = userChecked && userChecked.map(checkedIngredient => ingredientsRepository.getIngredientName(checkedIngredient, 'id'))
+  console.log(ingredientsWithNames);
+  if(ingredientsWithNames.length > 0 ) {
   domUpdates.displayNeededIngredients(ingredientsWithNames, userChecked, recipe)
+} else {
+  domUpdates.cookMessage(recipe)
+}
 }
 
 
@@ -387,16 +392,17 @@ function searchSavedRecipes(event) {
   }
 }
 
-//   function searchSavedIngredients(event) {
-//     if (event.target.className === 'search-button') {
-//       let searchInputValue = domUpdates.capitalize(searchInput.value)
-//       user.favoriteRecipes.map(favoriteRecipe => {
-//         let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
-//         console.log(favoritedRecipe);
-//         if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
-//           domUpdates.displaySearchedFavorite(favoritedRecipe)
-//         }
-//       })
-// }
-//   }
+  function searchSavedIngredients(event) {
+    if (event.target.className === 'search-button') {
+      console.log('user' ,user);
+      let searchInputValue = domUpdates.capitalize(searchInput.value)
+      user.favoriteRecipes.map(favoriteRecipe => {
+        let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+        // console.log(favoritedRecipe);
+        if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
+          domUpdates.displaySearchedFavorite(favoritedRecipe)
+        }
+      })
+}
+  }
 // ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())

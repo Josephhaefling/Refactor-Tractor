@@ -209,7 +209,6 @@ const domUpdates = {
     this.recipeData.forEach(recipe => {
       if (recipe !== favorite){
         this.hideRecipes(recipe)
-
       }
     })
   },
@@ -231,7 +230,8 @@ const domUpdates = {
   },
 
   cookMessage() {
-    console.log('boo');
+    let fullRecipeInfo = document.querySelector(".recipe-instructions");
+    fullRecipeInfo.insertAdjacentHTML("beforeend", 'You have all the ingredients need to cook this recipe.');
   }
 }
 
