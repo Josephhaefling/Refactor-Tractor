@@ -11,9 +11,15 @@ This is the group project from the Turing School of Software and Design's Mod 2.
 - Incorporate Webpack to streamline your workflow process
 - Leverage Chai Spies to verify that your DOM manipulation is happening
 
-## Setup
+## Setup Instructions
 
-# not sure what to put here!
+Local Server Instructions:
+- Clone this repo
+- In the directory, run `npm install`
+- Once `npm` is installed, run `npm start` in your terminal
+- Keep the terminal running in the background and go to `http://localhost:8080/` in your browser
+- When you are done, enter `control + c` in the terminal to stop the server
+
 
 ## Contributors
 
