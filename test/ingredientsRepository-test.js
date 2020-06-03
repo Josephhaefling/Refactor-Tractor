@@ -76,9 +76,11 @@ describe('ingredientsRepository', () => {
   it('should be a function', function() {
     expect(IngredientsRepository).to.be.a('function');
   });
+
   it('should be able to get the cost of ingredients', () => {
     expect(ingredientsRepository.getIngredientsCost(recipe.ingredients)).to.equal(1878)
   })
+  
   it('should be able to get the cost of ingredients', () => {
     expect(ingredientsRepository.getIngredientsCost([recipeData.ingredients[3]])).to.equal(902)
   })

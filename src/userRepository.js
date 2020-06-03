@@ -2,7 +2,6 @@ class UserRepository {
   constructor(userData) {
     this.userData = userData;
   }
-
 }
 
 

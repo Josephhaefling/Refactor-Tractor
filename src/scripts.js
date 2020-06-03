@@ -1,15 +1,11 @@
-import $ from 'jquery';
-
 import UserRepository from '../src/userRepository';
 import IngredientsRepository from '../src/ingredientsRepository';
 import RecipesRepository from '../src/recipesRepository';
 import domUpdates from '../src/domUpdates';
 import './css/base.scss';
 import './css/styles.scss';
-
 import User from './user';
 import Recipe from './recipe';
-import ingredientsData from './data/ingredient-data';
 import Pantry from '../src/pantry'
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
@@ -20,12 +16,10 @@ import './images/seasoning.png'
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
-let tagList = document.querySelector(".tag-list");
 let searchInput = document.querySelector(".search-input")
 let searchButton = document.querySelector(".search-button")
 let recipes = [];
@@ -48,12 +42,12 @@ main.addEventListener("click", () => {
 });
 searchButton.addEventListener('click', function() {
   searchSavedRecipes(event)
-  // searchSavedIngredients(event)
 });
+
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 
 savedRecipesBtn.addEventListener("click", () => {
-    showSavedRecipes()
+  showSavedRecipes()
 });
 
 showPantryRecipes.addEventListener("click", () => {
@@ -61,12 +55,15 @@ showPantryRecipes.addEventListener("click", () => {
 });
 
 Promise.all([
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData').then(response => response.json()),
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData').then(response => response.json()),
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData').then(response => response.json())
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+    .then(response => response.json()),
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then(response => response.json()),
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then(response => response.json())
 ])
-.then(data => createDataSets(data[0].wcUsersData, data[1].ingredientsData, data[2].recipeData))
-.catch(err => console.error(err))
+  .then(data => createDataSets(data[0].wcUsersData, data[1].ingredientsData, data[2].recipeData))
+  .catch(err => console.error(err))
 
 
 const createDataSets = (wcUsersData, ingredientsData, recipeData) => {
@@ -111,15 +108,15 @@ const updateUserInfo = (ingredientID, ingredientAmount) => {
   fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
     method: 'POST',
     headers: {
-      'Content-Type' : 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "userID": userID,
-      "ingredientID": ingredientID,
+      userID,
+      ingredientID,
       "ingredientModification": amount
     })
-  }).then(response => console.log(response.json()))
-  .catch(err => console.error(err.message))
+  }).then(response => response.json())
+    .catch(err => console.error(err.message))
 }
 
 // CREATE RECIPE CARDS
@@ -158,8 +155,6 @@ const findCheckedBoxes = () => {
   findTaggedRecipes(selectedTags);
 }
 
-//Do we need to use the method in the user?
-//Figure out how to filter only favorites by type when on favorites section
 const findTaggedRecipes = (selected, recipeList) => {
   recipeList = user.viewingFavorites ? user.favoriteRecipes : recipes;
   let filteredResults = [];
@@ -188,22 +183,21 @@ const filterRecipes = (filtered) => {
 }
 
 const addToMyRecipes = () => {
- if (event.target.className === "card-apple-icon") {
-   let cardId = parseInt(event.target.closest(".recipe-card").id)
-   if (!user.favoriteRecipes.includes(cardId)) {
-     user.saveRecipe(cardId);
-     domUpdates.fillAppleIcon(event)
-   } else {
-     user.removeRecipe(cardId);
-     domUpdates.emptyAppleIcon(event)
-   }
- } else if (event.target.id === "exit-recipe-btn") {
-   domUpdates.exitRecipe();
- } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-   domUpdates.openRecipeInfo(event);
- }
+  if (event.target.className === "card-apple-icon") {
+    let cardId = parseInt(event.target.closest(".recipe-card").id)
+    if (!user.favoriteRecipes.includes(cardId)) {
+      user.saveRecipe(cardId);
+      domUpdates.fillAppleIcon(event)
+    } else {
+      user.removeRecipe(cardId);
+      domUpdates.emptyAppleIcon(event)
+    }
+  } else if (event.target.id === "exit-recipe-btn") {
+    domUpdates.exitRecipe();
+  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
+    domUpdates.openRecipeInfo(event);
+  }
 }
-
 
 const isDescendant = (parent, child) => {
   let node = child;
@@ -228,33 +222,6 @@ const showSavedRecipes = () => {
   user.viewingFavorites = true;
 }
 
-
-
-
-
-
-
-
-
-
-// // TOGGLE DISPLAYS
-
-
-
-
-// const filterNonSearched(filtered) {
-//   let found = recipes.filter(recipe => {
-//     let ids = filtered.map(f => f.id);
-//     return !ids.includes(recipe.id)
-//   })
-//   hideUnselectedRecipes(found);
-// }
-
-
-
-
-
-
 // CREATE AND USE PANTRY
 const findPantryInfo = (update) => {
   const fullPantryIngredients = []
@@ -263,10 +230,9 @@ const findPantryInfo = (update) => {
     fullPantryIngredients.push(ingredientsRepository.getIngredientName(pantryIngredient, 'ingredient'))
   })
   const sortedPantry = fullPantryIngredients.sort((a, b) => a.name.localeCompare(b.name))
-  update? domUpdates.updatePantryInfo(sortedPantry, pantryIngredients): displayPantryInfo(sortedPantry, pantryIngredients);
+  update ? domUpdates.updatePantryInfo(sortedPantry, pantryIngredients) : displayPantryInfo(sortedPantry, pantryIngredients);
 }
 
-//Probably needs to go into DOM updates
 const displayPantryInfo = (pantry, amountsPantry) => {
   pantry.forEach(ingredient => {
     let amountOfIngredient = amountsPantry.find(userIngredient => userIngredient.ingredient === ingredient.id)
@@ -301,7 +267,7 @@ const findRecipesWithCheckedIngredients = (selected, ingredientsRepository) => {
       allRecipeIngredients.push(ingredientName.name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-     domUpdates.hideRecipes(recipe);
+      domUpdates.hideRecipes(recipe);
     }
   })
 }
@@ -312,13 +278,13 @@ const getRecipe = () => {
   if (event.target.classList.value === 'calculate-cost') {
     getRecipeCost(recipe)
     domUpdates.disableButton(event.target.classList.value)
-  } else if(event.target.classList.value === 'check-pantry') {
+  } else if (event.target.classList.value === 'check-pantry') {
     checkPantryForIngredients(recipe)
     domUpdates.disableButton(event.target.classList.value)
-  } else if(event.target.classList.value === 'add-ingredients-btn') {
+  } else if (event.target.classList.value === 'add-ingredients-btn') {
     putItemsInPantry(recipe)
     domUpdates.disableButton(event.target.classList.value)
-  } else if(event.target.classList.value === 'cook-recipe') {
+  } else if (event.target.classList.value === 'cook-recipe') {
     cookRecipe(recipe)
     domUpdates.disableButton(event.target.classList.value)
   }
@@ -332,24 +298,23 @@ const getRecipeCost = (recipe) => {
 
 const checkPantryForIngredients = (recipe) => {
   let userChecked = user.checkUserPantryForIngredients(recipe);
-  let ingredientsWithNames = userChecked && userChecked.map(checkedIngredient => ingredientsRepository.getIngredientName(checkedIngredient, 'id'))
-  console.log(ingredientsWithNames);
-  if(ingredientsWithNames.length > 0 ) {
-  domUpdates.displayNeededIngredients(ingredientsWithNames, userChecked, recipe)
-} else {
-  domUpdates.cookMessage(recipe)
+  let ingredientsWithNames = userChecked.map(checkedIngredient => ingredientsRepository.getIngredientName(checkedIngredient, 'id'))
+  if (ingredientsWithNames.length > 0 ) {
+    domUpdates.displayNeededIngredients(ingredientsWithNames, userChecked, recipe)
+  } else {
+    domUpdates.cookMessage(recipe)
+  }
 }
-}
-
 
 const putItemsInPantry = (recipe) => {
-    const ingredientsToAdd = updateIngredientForPost(recipe)
-    let userChecked = user.checkUserPantryForIngredients(recipe);
-    const pantryBefore = user.pantry.ingredients.length
-    user.addItemsToPantry(userChecked)
-    ingredientsToAdd.forEach(ingredientToAdd => {
-      updateUserInfo(ingredientToAdd.id, ingredientToAdd.amount)})
-    pantryBefore < user.pantry.ingredients.length ? findPantryInfo('update') : domUpdates.cookMessage(recipe)
+  const ingredientsToAdd = updateIngredientForPost(recipe)
+  let userChecked = user.checkUserPantryForIngredients(recipe);
+  const pantryBefore = user.pantry.ingredients.length
+  user.addItemsToPantry(userChecked)
+  ingredientsToAdd.forEach(ingredientToAdd => {
+    updateUserInfo(ingredientToAdd.id, ingredientToAdd.amount)
+  })
+  pantryBefore < user.pantry.ingredients.length ? findPantryInfo('update') : domUpdates.cookMessage(recipe)
 }
 
 const cookRecipe = (recipe) => {
@@ -357,7 +322,9 @@ const cookRecipe = (recipe) => {
     const ingredientsToRemove = updateIngredientForPost(recipe)
     user.removeRecipeIngredients(recipe.ingredients)
     findPantryInfo('update')
-    ingredientsToRemove.forEach(ingredientToRemove => updateUserInfo(ingredientToRemove.id, `-${ingredientToRemove.amount}`))
+    ingredientsToRemove.forEach(ingredientToRemove => {
+      updateUserInfo(ingredientToRemove.id, `-${ingredientToRemove.amount}`)
+    })
   }
 }
 
@@ -373,7 +340,9 @@ const updateIngredientForPost = (recipe) => {
 const fixRecipeData = () => {
   recipesRepository.recipeData.forEach(recipe => {
     recipe.ingredients.forEach(recipeIngredient => {
-      let thing  = ingredientsRepository.ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
+      let thing  = ingredientsRepository.ingredientsData.find(ingredient => {
+        return ingredient.id === recipeIngredient.id
+      })
       recipeIngredient.name = thing.name
     })
   })
@@ -392,17 +361,15 @@ function searchSavedRecipes(event) {
   }
 }
 
-  function searchSavedIngredients(event) {
-    if (event.target.className === 'search-button') {
-      console.log('user' ,user);
-      let searchInputValue = domUpdates.capitalize(searchInput.value)
-      user.favoriteRecipes.map(favoriteRecipe => {
-        let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
-        // console.log(favoritedRecipe);
-        if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
-          domUpdates.displaySearchedFavorite(favoritedRecipe)
-        }
-      })
-}
+function searchSavedIngredients(event) {
+  if (event.target.className === 'search-button') {
+    let searchInputValue = domUpdates.capitalize(searchInput.value)
+    user.favoriteRecipes.map(favoriteRecipe => {
+      let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
+      // console.log(favoritedRecipe);
+      if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
+        domUpdates.displaySearchedFavorite(favoritedRecipe)
+      }
+    })
   }
-// ||favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())
+}

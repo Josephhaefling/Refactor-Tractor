@@ -32,9 +32,9 @@ class User {
     const haveIngredients = recipeIngredients.map(recipeIngredient => this.pantry.checkPantryForIngredients(recipeIngredient))
     const missingIngredients = haveIngredients.filter(ingredient => ingredient)
     const shortOnIngredients = this.pantry.checkIngredientAmount(recipeIngredients);
-    if(missingIngredients.length === 0 && shortOnIngredients.length > 0) {
+    if (missingIngredients.length === 0 && shortOnIngredients.length > 0) {
       return shortOnIngredients
-    } else if(missingIngredients.length > 0 && !shortOnIngredients) {
+    } else if (missingIngredients.length > 0 && !shortOnIngredients) {
       return missingIngredients
     } else if (missingIngredients.length > 0 && shortOnIngredients.length > 0) {
       return missingIngredients.concat(shortOnIngredients)
@@ -45,10 +45,10 @@ class User {
 
   addItemsToPantry(ingredientsToAdd) {
     ingredientsToAdd.forEach(ingredientToAdd => {
-      let pantryItem  = this.pantry.addItem(ingredientToAdd)
+      this.pantry.addItem(ingredientToAdd)
     })
     return this.pantry.ingredients
-}
+  }
 
   removeRecipeIngredients(recipeIngredients) {
     recipeIngredients.forEach(ingredient => {
