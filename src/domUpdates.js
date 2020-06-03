@@ -203,6 +203,16 @@ const domUpdates = {
     })
   },
 
+  displaySearchedByIngredient(favorites) {
+    let nonFilteredRecipes = this.recipeData.reduce((acc, recipeData) => {
+     if (!favorites.includes(recipeData)) {
+       acc.push(recipeData)
+     }
+    return acc
+    }, [])
+    nonFilteredRecipes.forEach(recipe => this.hideRecipes(recipe))
+  },
+  
   hideRecipes(recipe) {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domRecipe.style.display = "none";
@@ -221,6 +231,7 @@ const domUpdates = {
     });
   },
 
+//gotta 
   cookMessage() {
     let fullRecipeInfo = document.querySelector(".recipe-instructions");
     fullRecipeInfo.insertAdjacentHTML("beforeend", 'You have all the ingredients need to cook this recipe.');

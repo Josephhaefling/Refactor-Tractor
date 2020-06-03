@@ -42,6 +42,7 @@ main.addEventListener("click", () => {
 });
 searchButton.addEventListener('click', function() {
   searchSavedRecipes(event)
+  searchSavedByIngredients(event)
 });
 
 pantryBtn.addEventListener("click", domUpdates.toggleMenu);
@@ -361,15 +362,20 @@ function searchSavedRecipes(event) {
   }
 }
 
-function searchSavedIngredients(event) {
+function searchSavedByIngredients(event) {
   if (event.target.className === 'search-button') {
-    let searchInputValue = domUpdates.capitalize(searchInput.value)
-    user.favoriteRecipes.map(favoriteRecipe => {
-      let favoritedRecipe = recipesRepository.recipeData.find(recipe => recipe.id === favoriteRecipe)
-      // console.log(favoritedRecipe);
-      if (favoritedRecipe.ingredients.includes(searchInputValue.toLowerCase())) {
-        domUpdates.displaySearchedFavorite(favoritedRecipe)
-      }
+    let searchInputValue = searchInput.value.toLowerCase()
+    let searchedRecipe = user.favoriteRecipes.map(favoriteRecipe => {
+      let favoritedRecipe = recipesRepository.find(recipe => recipe.id === favoriteRecipe )
+      let matchedFavorites = favoritedRecipe.ingredients.reduce((acc, ingredient) => {
+        if (ingredient.name.includes(searchInputValue)) {
+          acc.push(favoritedRecipe)
+        }
+        return acc
+      }, [])
+      return matchedFavorites
     })
+    let filtered = searchedRecipe.filter(recipe => recipe[0]).flat()
+    domUpdates.displaySearchedByIngredient(filtered)
   }
-}
+  }
